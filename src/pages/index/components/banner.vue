@@ -1,5 +1,3 @@
-
-
 <template>
   <div class="banner-con">
       <div class="banner">

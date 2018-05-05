@@ -3,6 +3,7 @@
     <Header></Header>
     <Search></Search>
     <index-nav :categoryList="categoryList"></index-nav>
+    <Floor :floorList="floorList"></Floor>
     <Footer></Footer>
   </div>
 </template>
@@ -11,7 +12,10 @@ import axios from 'axios'
 import Header from '../common/header'
 import Search from '../common/search'
 import Footer from '../common/footer'
+
+import Floor from './components/floor'
 import IndexNav from './components/nav'
+
 
 export default{
   name: 'Index',
@@ -20,10 +24,12 @@ export default{
     Footer,
     Search,
     IndexNav,
+    Floor
   },
   data () {
     return {
-      categoryList: [] // 分类导航
+      categoryList: [], // 分类导航
+      floorList: [] // 商品楼层 
     }
   },
   methods: {
@@ -31,7 +37,8 @@ export default{
       axios.get('../../../static/mock/index.json')
       .then((res) => {
         const msg = res.data
-        this.categoryList = msg.data.categoryNav;
+        this.categoryList = msg.data.categoryNav
+        this.floorList = msg.data.floorList
       })
       .catch((arr) => {
       })
