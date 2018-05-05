@@ -2,48 +2,10 @@
 <div>
   <div class="w">
     <ul class="keywords-list">
-      <li class="keywords-item">
-        <a href="./list.html?keyword=数码" class="link">数码</a>
-        <a href="./list.html?keyword=手机" class="link">手机</a>
-      </li>
-      <li class="keywords-item">
-        <a href="./list.html?keyword=电脑" class="link">电脑</a>
-        <a href="./list.html?keyword=办公配件" class="link">办公配件</a>
-      </li>
-      <li class="keywords-item">
-        <a href="./list.html?keyword=电视" class="link">电视</a>
-        <a href="./list.html?keyword=空调" class="link">空调</a>
-        <a href="./list.html?keyword=冰箱" class="link">冰箱</a>
-        <a href="./list.html?keyword=洗衣机" class="link">洗衣机</a>
-      </li>
-      <li class="keywords-item">
-        <a href="./list.html?keyword=厨卫家电" class="link">厨卫家电</a>
-        <a href="./list.html?keyword=手机" class="link">小家电</a>
-      </li>
-       <li class="keywords-item">
-        <a href="./list.html?keyword=家具" class="link">家具</a>
-        <a href="./list.html?keyword=家装" class="link">家装</a>
-      </li>
-      <li class="keywords-item">
-        <a href="./list.html?keyword=个护化妆" class="link">个护化妆</a>
-        <a href="./list.html?keyword=清洁用品" class="link">清洁用品</a>
-        <a href="./list.html?keyword=纸品" class="link">纸品</a>
-      </li>
-      <li class="keywords-item">
-        <a href="./list.html?keyword=母婴用品" class="link">母婴用品</a>
-        <a href="./list.html?keyword=儿童玩具" class="link">儿童玩具</a>
-        <a href="./list.html?keyword=童装童鞋" class="link">童装童鞋</a>
-      </li>
-      <li class="keywords-item">
-        <a href="./list.html?keyword=鞋靴" class="link">鞋靴</a>
-        <a href="./list.html?keyword=箱包" class="link">箱包</a>
-        <a href="./list.html?keyword=钟表" class="link">钟表</a>
-        <a href="./list.html?keyword=钟表" class="link">珠宝</a>
-      </li>
-      <li class="keywords-item">
-        <a href="./list.html?keyword=图书" class="link">图书</a>
-        <a href="./list.html?keyword=音箱" class="link">音箱</a>
-        <a href="./list.html?keyword=电子书" class="link">电子书</a>
+      <li class="keywords-item" v-for="item of categoryList" :key="item.id">
+        <a href="./list.html?keyword=数码"
+          class="link"
+          v-for="navItem of item.children">{{navItem.name}}</a>
       </li>
     </ul>
     <!-- 右侧的banner容器 -->
@@ -55,6 +17,10 @@
 import Banner from './banner'
   export default {
     name: 'IndexNav',
+    // 接收父组件传递的参数
+    props: {
+      categoryList: Array
+    },
     data(){
       return {
 

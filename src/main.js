@@ -4,8 +4,8 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 // 样式初始化
-import './assets/layout.css'
-import './assets/reset.css'
+import './assets/css/layout.styl'
+import './assets/css/reset.css'
 
 
 Vue.config.productionTip = false

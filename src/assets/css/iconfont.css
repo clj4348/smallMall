@@ -6,11 +6,11 @@
 */
 @font-face {
   font-family: 'icomoon';
-  src:  url('./iconfont/icomoon.eot?aygxio');
-  src:  url('./iconfont/icomoon.eot?aygxio#iefix') format('embedded-opentype'),
-    url('./iconfont/icomoon.ttf?aygxio') format('truetype'),
-    url('./iconfont/icomoon.woff?aygxio') format('woff'),
-    url('./iconfont/icomoon.svg?aygxio#icomoon') format('svg');
+  src:  url('../iconfont/icomoon.eot?aygxio');
+  src:  url('../iconfont/icomoon.eot?aygxio#iefix') format('embedded-opentype'),
+    url('../iconfont/icomoon.ttf?aygxio') format('truetype'),
+    url('../iconfont/icomoon.woff?aygxio') format('woff'),
+    url('../iconfont/icomoon.svg?aygxio#icomoon') format('svg');
   font-weight: normal;
   font-style: normal;
 }
