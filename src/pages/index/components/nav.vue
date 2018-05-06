@@ -1,33 +1,20 @@
 <template>
 <div>
-  <div class="w">
-    <ul class="keywords-list">
-      <li class="keywords-item" v-for="item of categoryList" :key="item.id">
-        <a href="./list.html?keyword=数码"
-          class="link"
-          v-for="navItem of item.children">{{navItem.name}}</a>
-      </li>
-    </ul>
-    <!-- 右侧的banner容器 -->
-    <Banner></Banner>
-  </div>
+  <ul class="keywords-list">
+    <li class="keywords-item" v-for="item of categoryList" :key="item.id">
+      <a href="./list.html?keyword=数码"
+        class="link"
+        v-for="navItem of item.children">{{navItem.name}}</a>
+    </li>
+  </ul>
 </div>
 </template>
 <script>
-import Banner from './banner'
   export default {
     name: 'IndexNav',
     // 接收父组件传递的参数
     props: {
-      categoryList: Array
-    },
-    data(){
-      return {
-
-      }
-    },
-    components: {
-      Banner
+      categoryList: Array,
     }
   }
 </script>

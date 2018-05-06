@@ -2,7 +2,10 @@
   <div>
     <Header></Header>
     <Search></Search>
-    <index-nav :categoryList="categoryList"></index-nav>
+    <div class="w">
+      <index-nav :categoryList="categoryList"></index-nav>
+      <Banner :bannerList="bannerList"></Banner>
+    </div>
     <Floor :floorList="floorList"></Floor>
     <Footer></Footer>
   </div>
@@ -12,10 +15,10 @@ import axios from 'axios'
 import Header from '../common/header'
 import Search from '../common/search'
 import Footer from '../common/footer'
-
+ 
 import Floor from './components/floor'
 import IndexNav from './components/nav'
-
+import Banner from './components/banner'
 
 export default{
   name: 'Index',
@@ -24,12 +27,14 @@ export default{
     Footer,
     Search,
     IndexNav,
+    Banner,
     Floor
   },
   data () {
     return {
       categoryList: [], // 分类导航
-      floorList: [] // 商品楼层 
+      floorList: [], // 商品楼层
+      bannerList: [] 
     }
   },
   methods: {
@@ -39,6 +44,7 @@ export default{
         const msg = res.data
         this.categoryList = msg.data.categoryNav
         this.floorList = msg.data.floorList
+        this.bannerList = msg.data.swiperList
       })
       .catch((arr) => {
       })
