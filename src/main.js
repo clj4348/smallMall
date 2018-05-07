@@ -8,9 +8,10 @@ import router from './router'
 import 'element-ui/lib/theme-chalk/index.css';
 import './assets/css/layout.styl'
 import './assets/css/reset.css'
-
+import utils from './assets/js/utils.js'
 import { Carousel, CarouselItem} from 'element-ui'
 
+Vue.prototype.utils = utils
 Vue.use(Carousel)
 Vue.use(CarouselItem)
 

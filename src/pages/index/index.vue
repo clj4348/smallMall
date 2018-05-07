@@ -13,9 +13,10 @@
 <script>
 import axios from 'axios'
 import Header from '../common/header'
+
 import Search from '../common/search'
 import Footer from '../common/footer'
- 
+
 import Floor from './components/floor'
 import IndexNav from './components/nav'
 import Banner from './components/banner'
@@ -39,6 +40,7 @@ export default{
   },
   methods: {
     getIndexInfo () {
+      this.utils.a();
       axios.get('../../../static/mock/index.json')
       .then((res) => {
         const msg = res.data
