@@ -34,7 +34,7 @@ export default{
     return {
       categoryList: [], // 分类导航
       floorList: [], // 商品楼层
-      bannerList: [] 
+      bannerList: [] // banner图
     }
   },
   methods: {

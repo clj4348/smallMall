@@ -5,6 +5,7 @@ import Index from '@/pages/index/index'
 import My from '@/pages/my/my'
 import Msg from '@/pages/msg/msg'
 import Login from '@/pages/login/login'
+import Register from '@/pages/register/register'
 
 
 Vue.use(Router)
@@ -23,9 +24,9 @@ export default new Router({
       },
       component: My
     }, {
-      path: '/msg',
-      name: 'Msg',
-      component: Msg
+      path: '/register',
+      name: 'Register',
+      component: Register
     }, {
       path: '/login',
       name: 'Login',
