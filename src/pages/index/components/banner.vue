@@ -2,9 +2,9 @@
   <div class="banner-con">
     <div class="block">
       <el-carousel trigger="click" height="370px" interval.number="4000">
-        <el-carousel-item v-for="item in 4" :key="item">
+        <el-carousel-item v-for="item in bannerList" :key="item.id">
           <router-link to="">
-            <img src="http://p894y9s6g.bkt.clouddn.com/banner1.jpg">
+            <img :src="item.imgUrl">
           </router-link >
         </el-carousel-item>
       </el-carousel>
@@ -14,7 +14,10 @@
 
 <script>
 export default{
-  name: 'Banner'
+  name: 'Banner',
+  props: {
+    bannerList: Array
+  }
 }
 </script>
 <style lang="stylus" scoped>

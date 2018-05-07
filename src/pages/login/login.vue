@@ -6,23 +6,35 @@
       <div class="user-con">
         <div class="user-title">用户登录</div>
         <div class="user-box">
-          <div class="error-item">
+          <div class="error-item" v-if="userErr !== ''">
             <i class="fa fa-minus-circle error-icon"></i>
-            <p class="err-msg">Error</p>
+            <p class="err-msg">{{userErr}}</p>
           </div>
           <div class="user-item">
             <label for="username" class="user-label">
               <i class="fa fa-user"></i>
             </label>
-            <input class="user-content" id="username" placeholder="请输入用户名" autocomplete="off" type="text" name="">
+            <input class="user-content"
+              @focus="errIint"
+              placeholder="请输入用户名" 
+              autocomplete="off"
+              v-model="userInfo.username" 
+              type="text">
           </div>
           <div class="user-item">
             <label for="password" class="user-label">
               <i class="fa fa-lock"></i>
             </label>
-            <input type="password" class="user-content" id="password" placeholder="请输入密码" autocomplete="off" name="">
+            <input @focus="errIint"
+              class="user-content"
+              type="password"
+              id="password"
+              v-model="userInfo.password"
+              placeholder="请输入密码"
+              autocomplete="off"
+              name="">
           </div>
-          <a class="btn btn-submit" id="submit">登录</a>
+          <a class="btn btn-submit" @click="login">登录</a>
           <div class="link-item">
             <router-link class="link" to="./user-pass-reset.html">忘记密码</router-link>
             <router-link class="link" to="/register">免费注册</router-link>
@@ -36,6 +48,7 @@
 </template>
 <script>
 import axios from  'axios'
+import Qs from 'qs'
 import NavSimple from '../common/navSimple'
 import FooterNav from '../common/footer'
 export default{
@@ -46,27 +59,53 @@ export default{
   },
   data () {
     return {
+      userErr: '',
       userInfo: {
-        loginName: '',
-        password: '',
+        username: '',
+        password: ''
       }
     }
   },
   methods: {
-    //字段的验证，支持非空、手机、邮箱
-    validate : function(value, type){
-      //非空验证
-      if('require' === type){
-        return !!value;
+    // 用户名
+    isUsername () {
+      if(this.userInfo.username == '' ){
+        this.userErr = '用户名不能为空'
+        return false
       }
-      //手机验证
-      if('phone' === type){
-        return /^1\d{10}$/.test(value);
+      this.userErr =  '' 
+      return true
+    },
+     // 输入密码
+    isPassword () {
+      if(this.userInfo.password == '' ){
+        this.userErr = '密码不能为空'
+        return false
       }
-      //邮箱格式验证
-      if('email' === type){
-        return /^(\w)+(\.\w+)*@(\w)+((\.\w{2,3}){1,3})$/.test(value);
-      }
+      this.userErr =  '' 
+      return true
+    },
+    errIint(){
+      this.userErr = ''
+    },
+    login () {
+      if(!this.isUsername()) return
+      if(!this.isPassword()) return
+      // 校验用户名是否存在
+      const userData = Qs.stringify(this.userInfo)
+      axios.post('/api/user/login.do',userData,{headers:{'Content-Type':'application/x-www-form-urlencoded'}})
+      .then((res) => {
+        const status = res.data.status
+        if(status === 0){
+          this.$router.push('/')
+        }else if(status === 1){
+          this.userErr = res.data.msg
+          return false
+        }
+      })
+      .catch((err) => {
+        console.log('请求数据开小差了')
+      })
     }
   }
 }
@@ -105,7 +144,6 @@ export default{
   border:1px solid red;
   color: red;
   background: #fde9e9;
-  display: none;
 }
 
 /* 错误图标 */

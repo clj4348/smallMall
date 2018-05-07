@@ -197,9 +197,12 @@ export default{
         'str': this.dataForm.username, 
         'type': 'username'
       })
-       axios.post('/api/user/check_valid.do',userData,{headers:{'Content-Type':'application/x-www-form-urlencoded'}})
+      axios.post('/api/user/check_valid.do',userData,{headers:{'Content-Type':'application/x-www-form-urlencoded'}})
       .then((res) => {
-        console.log(res);
+        if(res.data.status === 1){
+          this.userErr = res.data.msg
+          return false
+        }
       })
       .catch((err) => {
       })

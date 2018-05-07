@@ -3,16 +3,16 @@
     <div class="nav">
       <div class="w">
         <div class="user-info">
-          <span class="user not-login">
-            <span class="link js-login">登录</span>
+          <span class="user not-login" v-if="userStatus == 1">
+            <router-link to="/login" class="link"  target="blank">登录</router-link>
             <router-link to="/register" class="link js-register">注册</router-link>
           </span>
-          <span class="user login">
+          <span class="user login" v-else>
             <span class="link-text">
               欢迎，
-              <span class="username"></span>
+              <span class="username">{{username}}</span>
               </span>
-            <span class="link js-logout">退出</span>
+            <span class="link js-logout"> 退出</span>
           </span>
         </div>
         <ul class="nav-list">
@@ -38,14 +38,31 @@
 </template>
 
 <script>
+import axios from 'axios' 
   export default{
     name: 'Header',
     data () {
       return {
-        a:''
+        userStatus: 1,
+        username: '',
+      }
+    },
+    methods:{
+      userInfo () {
+        axios.post('/api/user/get_user_info.do')
+        .then((res) => {
+          if(res.data.status === 0){
+            this.userStatus = res.data.status
+            this.username = res.data.data.username
+          }
+        })
+        .catch((err) => {
+
+        })
       }
     },
     mounted () {
+      this.userInfo()
     }
   }
 </script>
