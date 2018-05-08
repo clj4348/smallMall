@@ -2,9 +2,11 @@
 <div>
   <ul class="keywords-list">
     <li class="keywords-item" v-for="item of categoryList" :key="item.id">
-      <a href="./list.html?keyword=数码"
+      <a @click="sendParams(navItem.name)" 
         class="link"
-        v-for="navItem of item.children">{{navItem.name}}</a>
+        v-for="navItem of item.children" 
+        >{{navItem.name}}
+      </a>
     </li>
   </ul>
 </div>
@@ -15,6 +17,19 @@
     // 接收父组件传递的参数
     props: {
       categoryList: Array,
+    },
+    methods: {
+      sendParams (name) {
+        this.$router.push({
+          path: '/list',
+          params: {
+            keyword: name
+          },
+          query: {
+              keyword: name
+          }
+        })
+      }
     }
   }
 </script>

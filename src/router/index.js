@@ -6,11 +6,12 @@ import My from '@/pages/my/my'
 import Msg from '@/pages/msg/msg'
 import Login from '@/pages/login/login'
 import Register from '@/pages/register/register'
-
+import List from '@/pages/list/list'
 
 Vue.use(Router)
 
 export default new Router({
+  mode: 'history',
   routes: [
     {
       path: '/',
@@ -32,6 +33,14 @@ export default new Router({
       name: 'Login',
       component: Login
     },
-
+    {
+      path: '/list',
+      name: 'List',
+      meta: {
+        title: '商品列表'
+      },
+      component: List
+    }
   ]
 })
+

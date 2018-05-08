@@ -2,7 +2,7 @@
   <div>
     <div class="header">
       <div class="w">
-        <a href="./index.html" class="logo">MMall</a>
+        <router-link to="/" class="logo">MMall</router-link>
         <div class="search-con">
           <input class="search-input" id="search-input" placeholder="请输入商品名称" />
           <button class="btn search-btn" id="search-btn" >搜索</button>
