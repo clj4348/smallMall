@@ -26,6 +26,7 @@
 					this.actBefore = ''
 					this.act = option
 				}
+				this.$emit('search-list',{default:this.act,price:this.actBefore})
 			}
 		}
 	}

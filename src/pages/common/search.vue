@@ -4,8 +4,8 @@
       <div class="w">
         <router-link to="/" class="logo">MMall</router-link>
         <div class="search-con">
-          <input class="search-input" id="search-input" placeholder="请输入商品名称" />
-          <button class="btn search-btn" id="search-btn" >搜索</button>
+          <input class="search-input" v-model="searchName" @keyup="show($event)" id="search-input" placeholder="请输入商品名称" />
+          <button class="btn search-btn" @click="sendParams(searchName)" id="search-btn">搜索</button>
         </div>
       </div>
     </div>
@@ -17,7 +17,26 @@
     name: 'Search',
     data () {
       return {
-        index: 0
+        index: 0,
+        searchName: ''
+      }
+    },
+    methods:{
+       sendParams (name) {
+        this.$router.push({
+          path: '/list',
+          params: {
+            keyword: name
+          },
+          query: {
+              keyword: name
+          }
+        })
+      },
+      show(e){
+        if(e.keyCode == 13){
+          this.sendParams(this.searchName)
+        }
       }
     },
     mounted () {

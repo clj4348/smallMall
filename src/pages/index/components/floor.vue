@@ -5,7 +5,7 @@
       <h1 class="floor-title">F{{(index+1) +" " + item.title}}</h1>
       <ul class="floor-list clearfix">
         <li class="floor-item" v-for="(itemChild, indexChild) of item.children" :key="indexChild">
-          <a href="./list.html?categoryId=100006">
+          <a @click="sendParams(itemChild.goodsName)">
             <span class="floor-text">{{itemChild.goodsName}}</span>
             <img class="floor-img" :src="itemChild.imgUrl" />
           </a>
@@ -32,7 +32,21 @@ export default{
         item.title
       })
       return 
-    }
+    },
+  },
+  methods:{
+    sendParams (name) {
+        console.log(name)
+        this.$router.push({
+          path: '/list',
+          params: {
+            keyword: name
+          },
+          query: {
+              keyword: name
+          }
+        })
+      }
   },
   mounted () {
   }

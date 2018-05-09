@@ -1,6 +1,6 @@
 <template>
 	<div class="srot-con">
-		<ul class="p-list-con">
+		<ul class="p-list-con" v-if="contentlist.length > 0">
 		<li class="p-item" v-for="item of contentlist" 
 			v-if="item.mainImage != null && item.mainImage != ''">
 			<div class="p-img-con">
@@ -17,7 +17,7 @@
 			</div>
 		</li>
 		</ul>
-		<!-- <p class="err-tip">很抱歉，实在找不到您的商品。</p> -->
+		<p v-else class="err-tip">很抱歉，实在找不到您的商品。</p>
 	</div>
 </template>
 <script>
