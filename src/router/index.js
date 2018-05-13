@@ -7,6 +7,7 @@ import Msg from '@/pages/msg/msg'
 import Login from '@/pages/login/login'
 import Register from '@/pages/register/register'
 import List from '@/pages/list/list'
+import Detail from '@/pages/detail/detail'
 
 Vue.use(Router)
 
@@ -40,6 +41,14 @@ export default new Router({
         title: '商品列表'
       },
       component: List
+    },
+    {
+      path: '/detail',
+      name: 'Detail',
+      meta: {
+        title: '商品详情'
+      },
+      component: Detail
     }
   ]
 })

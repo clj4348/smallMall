@@ -1,13 +1,67 @@
 <template>
-	<div>
-		这是消息页面
+	<div class="pg-content">
+		<span class="pg-total pg-item">上一页</span>
+		<span class="text pg-item">第一页</span>
+		<span class="pg-item"
+			v-for="(item, index) of navigatepageNums"
+			:class="{'active': num===2}"
+			@click="numAct(index)"
+			:key="item">{{item}}
+		</span>
+		<span class="text pg-item">最后一页</span>
+		<span class="pg-total pg-item">下一页</span>
+		<span class="text">&nbsp;&nbsp;第{{size}}/{{pages}}页</span>
 	</div>
 </template>
 <script>
 	export default{
 		name: 'ListPage',
+		props: {
+			navigatepageNums: Array,
+			size: Number,
+			pages: Number
+		},
+		data () {
+			return {
+				num: this.size
+			}
+		},
+		methods: {
+			numAct(index){
+				this.num = parseInt(index)
+			}
+		},
+		mounted(){
+			console.log(this.size);		
+		}
 	}
 </script>
 <style lang="stylus" scoped>
-	
+	.pg-content
+		text-align: center
+		color: #333
+		.pg-item
+			display: inline-block
+			height: 36px
+			line-height: 36px
+			padding: 0 15px
+			margin: 0 2px
+			border: 1px solid #ccc
+			background: #eee
+			cursor: pointer
+			-webkit-user-select: none
+			-moz-user-select: none
+			user-select: none
+			&.disabled
+				color: #ccc
+				background: none
+				cursor: auto
+			&.active
+				border: 1px solid #f6f6f6
+				background: none
+				cursor: auto
+		.pg-total
+			margin-left: 10px
+			background: none
+			cursor: auto
 </style>

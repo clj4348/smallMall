@@ -1,7 +1,8 @@
 <template>
 	<div>
 		<Header></Header>
-		<Search></Search>
+		<!-- @search="search" -->
+		<Search @search="search"></Search>
 		<div class="crumb">
 		  <div class="w">
 		    <div class="crumb-con">
@@ -14,6 +15,10 @@
     <div class="page-wrap w">
     	<list-sort @search-list="getChildList"></list-sort>
 			<list-con :contentlist="contentlist"></list-con>
+			<list-page :navigatepageNums="navigatepageNums"
+				:pageNum="dataList.pageNum"
+				:size="size"
+				:pages="pages"></list-page>
 		</div>
 		<Footer></Footer>
 	</div>
@@ -26,6 +31,7 @@ import Search from '../common/search'
 import Footer from '../common/footer'
 import ListCon from './components/list-con'
 import ListSort from './components/list-sort'
+import ListPage from './components/list-page'
 export default{
 	name: 'List',
 	components: {
@@ -33,11 +39,18 @@ export default{
 		Search,
 		Footer,
 		ListCon,
-		ListSort
+		ListSort,
+		ListPage
 	},
 	data () {
 		return {
 			contentlist: [],
+			keywordVar:'',
+			navigatepageNums:[],
+			firstPage: 1, //第一页
+			lastPage: '',// 最后一页
+			size: 0, // 当前页数
+			pages: 0, // 总共多少页
 			dataList:{
 				keyword : this.utils.getUrlParam('keyword') || '',
 				categoryId : this.utils.getUrlParam('categoryId') || '',
@@ -55,10 +68,26 @@ export default{
 			})
 			.then((res) => {
 				this.contentlist=res.data.data.list
+				this.navigatepageNums = res.data.data.navigatepageNums // page编码
+				this.lastPage = res.data.data.lastPage //最后一页
+				this.pages = res.data.data.pages
+				this.size = res.data.data.size
 			})
 			.catch((err) => {
 
 			})
+		},
+		// 子组件传参的方法
+		search(options){
+
+			this.dataList.keyword = options,
+			
+			// 重置参数
+			this.dataList.categoryId ='',
+			this.dataList.orderBy ='default', // 升序降序
+			this.dataList.pageNum = 1,
+			this.dataList.pageSize = 2
+			this.getList();
 		},
 		// 子组件与父组件之间的通信
 		getChildList(params){

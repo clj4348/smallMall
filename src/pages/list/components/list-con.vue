@@ -4,7 +4,7 @@
 		<li class="p-item" v-for="item of contentlist" 
 			v-if="item.mainImage != null && item.mainImage != ''">
 			<div class="p-img-con">
-				<a class="link" href="./detail.html?productId=" target="_blank">
+				<a class="link" @click="openDetail(item.id)" target="_blank">
 					<img class="p-img" 
 					:src="item.mainImage.indexOf(item.imageHost) != -1 ? item.mainImage : (item.imageHost + item.mainImage) " :alt="item.name"/>
 				</a>
@@ -25,6 +25,19 @@
 		name: 'ListCon',
 		props: {
 			contentlist: Array
+		},
+		methods: {
+			openDetail(id) {
+				this.$router.push({
+					path: '/detail',
+					params: {
+						productId: id 
+					},
+					query: {
+						productId: id
+					}
+				})
+			}
 		}
 	}
 </script>

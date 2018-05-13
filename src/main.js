@@ -3,7 +3,7 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
-
+import store from './store/index.js'
 // 样式初始化
 import 'element-ui/lib/theme-chalk/index.css';
 import './assets/css/layout.styl'
@@ -12,6 +12,7 @@ import utils from './assets/js/utils.js'
 import { Carousel, CarouselItem} from 'element-ui'
 
 Vue.prototype.utils = utils
+
 Vue.use(Carousel)
 Vue.use(CarouselItem)
 
@@ -21,6 +22,7 @@ Vue.config.productionTip = false
 new Vue({
   el: '#app',
   router,
+  store,
   components: { App },
   template: '<App/>'
 })

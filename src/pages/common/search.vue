@@ -2,8 +2,10 @@
   <div>
     <div class="header">
       <div class="w">
+      
         <router-link to="/" class="logo">MMall</router-link>
         <div class="search-con">
+            <h1>{{keyword}}</h1>
           <input class="search-input" v-model="searchName" @keyup="show($event)" id="search-input" placeholder="请输入商品名称" />
           <button class="btn search-btn" @click="sendParams(searchName)" id="search-btn">搜索</button>
         </div>
@@ -21,6 +23,11 @@
         searchName: ''
       }
     },
+    computed:{
+      keyword(){
+        return this.$store.getters.getKeywordFn
+      }
+    },
     methods:{
        sendParams (name) {
         this.$router.push({
@@ -32,6 +39,8 @@
               keyword: name
           }
         })
+        this.$emit('search', name)
+        //location.reload()
       },
       show(e){
         if(e.keyCode == 13){
