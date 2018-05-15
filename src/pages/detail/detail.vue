@@ -5,17 +5,16 @@
     <div class="page-container w">
     	商品详情
     	<div class="intro-wrap clearfix">
-    		<goods-banner></goods-banner>
-    		<Sku></Sku>
+    		<goods-banner :detailInfo="detailInfo"></goods-banner>
+    		<Sku :detailInfo="detailInfo"></Sku>
     	</div>
-    	<goods-info></goods-info>
+    	<goods-info :detailDesc="detailDesc"></goods-info>
     </div>
 		<Footer></Footer>
 	</div>
 </template>
 <script>
 import axios from 'axios'
-import Qs from 'qs'
 import Header from '../common/header'
 import Search from '../common/search'
 import Footer from '../common/footer'
@@ -35,13 +34,29 @@ export default{
 	},
 	data () {
 		return {
-			a : ''
+			productId : this.utils.getUrlParam('productId') || '',
+			detailInfo: {},
+			detailDesc: '',
 		}
 	},
 	methods: {
+		getDetail() {
+			axios.get('/api/product/detail.do', {
+				params:{
+					productId: this.productId
+				}
+			})
+			.then((res) => {
+				this.detailInfo = res.data.data
+				this.detailDesc = res.data.data.detail
+ 			})
+			.catch((err) => {
 
+			})
+		}
 	},
 	mounted () {
+		this.getDetail()
 	}
 }
 </script>

@@ -62,7 +62,6 @@ export default{
 	},
 	methods: {
 		getList () {
-			let listParm  = Qs.stringify(this.dataList)
 			axios.get('/api/product/list.do', {
 				params:this.dataList
 			})

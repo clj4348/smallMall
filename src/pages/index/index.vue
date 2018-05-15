@@ -40,7 +40,6 @@ export default{
   },
   methods: {
     getIndexInfo () {
-      this.utils.a();
       axios.get('../../../static/mock/index.json')
       .then((res) => {
         const msg = res.data

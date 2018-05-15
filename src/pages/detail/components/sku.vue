@@ -1,20 +1,20 @@
 <template>
 	<div class="p-info-con">
-		<p class="p-name">Apple iPhone X (A1865) 全面屏手机 64GB 深空灰色</p>
-		<p class="p-subtitle">全面屏，全面绽放</p>
+		<p class="p-name">{{detailInfo.name}}</p>
+		<p class="p-subtitle">{{detailInfo.subtitle}}</p>
 		<div class="p-info-item p-price-con">
 			<span class="lable">价格:</span>
-			<span class="p-price">￥8316</span>
+			<span class="p-price">￥{{detailInfo.price}}</span>
 		</div>
 		<div class="p-info-item p-quantity-con">
 			<span class="lable">库存:</span>
-			<span class="p-price">9945</span>
+			<span class="p-price">{{detailInfo.stock}}</span>
 		</div>
 		<div class="p-info-item p-count-con">
 			<span class="lable">数量:</span>
-			<input class="p-count" value="1" readonly="readonly">
-			<span class="p-count-btn plus" data-opera-type="plus">+</span>
-			<span class="p-count-btn minus" data-opera-type="minus">-</span>
+			<input class="p-count" :value="count" readonly="readonly">
+			<span class="p-count-btn plus" @click="plus">+</span>
+			<span class="p-count-btn minus" @click="minus">-</span>
 		</div>
 		<div class="p-info-item">
 			<a class="btn cart-add">加入购物车</a>
@@ -23,7 +23,34 @@
 </template>
 <script>
 export default{
-	name: 'Sku'
+	name: 'Sku',
+	props:{
+		detailInfo: Object
+	},
+	data(){
+		return {
+			count: 1,
+			stock: this.detailInfo.stock
+		}
+	},
+	methods: {
+		plus () {
+			if(this.count >= this.stock) return this.stock
+			this.count++
+		},
+		minus () {
+			if(this.count <= 1) {
+				this.count = 1
+				return
+			} 
+			this.count--
+		}
+	},
+	mounted () {
+		this.$watch('detailInfo', function(newVal, oldVal){
+			this.stock = newVal.stock
+		})
+	}
 }
 </script>
 
