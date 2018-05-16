@@ -7,7 +7,8 @@ let store = new Vuex.Store({
 	// 1. state
 	state: {
 		// 搜索的数据
-		keyword: ''	
+		keyword: '',
+		token: null	
 	},
 	// 获取区属
 	getters: {
@@ -33,8 +34,12 @@ let store = new Vuex.Store({
 		// state指的是state中的数据
 		setCity(state, name){
 			state.keyword = name; // 将传参设置给state的keyword
+		},
+		token(state, val){
+			state.token = val
 		}
 	}
 })
+
 
 export default store;

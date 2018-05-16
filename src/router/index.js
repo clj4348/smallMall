@@ -2,16 +2,21 @@ import Vue from 'vue'
 import Router from 'vue-router'
 
 import Index from '@/pages/index/index'
-import My from '@/pages/my/my'
+import User from '@/pages/user/user'
 import Msg from '@/pages/msg/msg'
 import Login from '@/pages/login/login'
 import Register from '@/pages/register/register'
 import List from '@/pages/list/list'
 import Detail from '@/pages/detail/detail'
+import store from '../store/index.js'
+import utils from '../assets/js/utils.js'
 
 Vue.use(Router)
 
-export default new Router({
+if(utils.getItem('token')){
+  store.state.token = utils.getItem('token')
+}
+const router =  new Router({
   mode: 'history',
   routes: [
     {
@@ -19,12 +24,12 @@ export default new Router({
       name: 'Index',
       component: Index
     }, {
-      path: '/my',
-      name: 'My',
+      path: '/User',
+      name: 'User',
       meta: {
         requireAuth: true, // 需要登录页面
       },
-      component: My
+      component: User
     }, {
       path: '/register',
       name: 'Register',
@@ -52,4 +57,20 @@ export default new Router({
     }
   ]
 })
+// 登陆拦截
+router.beforeEach((to, from, next)=> {
+  if(to.meta.requireAuth){
+    if(store.state.token) {
+      next()
+    }else {
+      next({
+        path:'/login',
+        query:{redirect: to.fullpath}
+      })
+    }
+  }else{
+    next()
+  }
+})
 
+export default router

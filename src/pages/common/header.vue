@@ -23,10 +23,10 @@
             </a>
           </li>
           <li class="nav-item">
-            <a href="javascript:;" class="link">我的订单</a>
+            <router-link to="/my" class="link">我的订单</router-link>
           </li>
           <li class="nav-item">
-            <a href="javascript:;" class="link">我的MMall</a>
+            <router-link to="/user" class="link">我的MMall</router-link>
           </li>
           <li class="nav-item">
             <a href="javascript:;" class="link">关于MMall</a>

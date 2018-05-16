@@ -51,6 +51,8 @@ import axios from  'axios'
 import Qs from 'qs'
 import NavSimple from '../common/navSimple'
 import FooterNav from '../common/footer'
+import store from '../../store/index.js'
+
 export default{
   name: 'Login',
   components: {
@@ -97,7 +99,10 @@ export default{
       .then((res) => {
         const status = res.data.status
         if(status === 0){
-          this.$router.push('/')
+          console.log(res.data.data);
+          this.utils.setItem('token', res.data.data); // 生成token
+          store.state.token = res.data.data // 赋值给vuex中的token
+          this.$router.go(-1) //返回上一页
         }else if(status === 1){
           this.userErr = res.data.msg
           return false
@@ -116,87 +121,68 @@ export default{
   padding: 40px 0
   background: #e72955
   
-.user-con{
-  position: relative;
-  margin:0 auto;
-  width: 400px;
-  background: #fff;
-}
-
-.user-con .user-title{
-  text-align: center;
-  padding: 10px 0;
-  border-bottom: 1px solid #ddd;
-  font-size: 18px;
-  font-weight: bold;
-  color: #666;
-}
-
-.user-con .user-box{
-  padding: 20px ;
-}
-
+.user-con
+  position: relative
+  margin:0 auto
+  width: 400px
+  background: #fff
+  .user-title
+    text-align: center
+    padding: 10px 0
+    border-bottom: 1px solid #ddd
+    font-size: 18px
+    font-weight: bold
+    color: #666
+  .user-box
+    padding: 20px 
 /* 错误提示框 */
-.user-con .user-box .error-item{
-  position: relative;
-  padding: 4px 0 4px 40px;
-  margin-bottom: 10px;
-  border:1px solid red;
-  color: red;
-  background: #fde9e9;
-}
-
-/* 错误图标 */
-.user-con .user-box .error-icon{
-  position: absolute;
-  left: 14px;
-  top: 50%;
-  font-size: 14px;
-  margin-top: -7px;
-}
-
-.user-con .user-item{
-  position: relative;
-  margin-bottom: 20px;
-}
-.user-con .user-item .user-label{
-  position: absolute;
-  left: 1px;
-  top: 1px;
-  bottom: 1px;
-  width: 40px;
-  line-height: 36px;
-  background: #f3f3f3;
-  font-size: 28px;
-  color: #d3d3d3;
-  text-align: center;
-  border-right: 1px solid #bdbdbd;
-}
-
-.user-con .user-item .user-content{
-  padding: 10px 0 10px 50px;
-  width: 308px;
-  height: 18px;
-  line-height: 18px;
-  font-size: 15px;
-  border: 1px solid #bdbdbd;
-}
-
-.user-con .btn-submit{
-  width: 100%;
-  padding: 2px 0;
-  text-align: center;
-  font-size: 20px;
-}
-
+    .error-item
+      position: relative
+      padding: 4px 0 4px 40px
+      margin-bottom: 10px
+      border:1px solid red
+      color: red
+      background: #fde9e9
+    /* 错误图标 */
+    .error-icon
+      position: absolute
+      left: 14px
+      top: 50%
+      font-size: 14px
+      margin-top: -7px
+  .user-item
+    position: relative
+    margin-bottom: 20px
+    .user-label
+      position: absolute
+      left: 1px
+      top: 1px
+      bottom: 1px
+      width: 40px
+      line-height: 36px
+      background: #f3f3f3
+      font-size: 28px
+      color: #d3d3d3
+      text-align: center
+      border-right: 1px solid #bdbdbd
+    .user-content
+      padding: 10px 0 10px 50px
+      width: 308px
+      height: 18px
+      line-height: 18px
+      font-size: 15px
+      border: 1px solid #bdbdbd
+.btn-submit
+  width: 100%
+  padding: 2px 0
+  text-align: center
+  font-size: 20px
 /* 跳转链接 */
-.user-con .link-item{
-  text-align: right;
-  margin-top: 10px;
-}
+.link-item
+  text-align: right
+  margin-top: 10px
+  .link
+    margin-left: 10px
+    color: #999
 
-.user-con .link-item .link{
-  margin-left: 10px;
-  color: #999;
-}
 </style>

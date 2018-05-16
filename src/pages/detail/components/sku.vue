@@ -34,10 +34,12 @@ export default{
 		}
 	},
 	methods: {
+		// 加法
 		plus () {
 			if(this.count >= this.stock) return this.stock
 			this.count++
 		},
+		// 减法
 		minus () {
 			if(this.count <= 1) {
 				this.count = 1
