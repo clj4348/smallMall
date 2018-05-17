@@ -1,5 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+import store from '../store/index.js'
+import utils from '../assets/js/utils.js'
 
 import Index from '@/pages/index/index'
 import User from '@/pages/user/user'
@@ -8,8 +10,9 @@ import Login from '@/pages/login/login'
 import Register from '@/pages/register/register'
 import List from '@/pages/list/list'
 import Detail from '@/pages/detail/detail'
-import store from '../store/index.js'
-import utils from '../assets/js/utils.js'
+
+import MyInfo from '@/pages/user/my-info/my-info'
+import OrderList from '@/pages/user/order-list/order-list'
 
 Vue.use(Router)
 
@@ -24,12 +27,22 @@ const router =  new Router({
       name: 'Index',
       component: Index
     }, {
-      path: '/User',
+      path: '/user/my-info',
       name: 'User',
       meta: {
         requireAuth: true, // 需要登录页面
       },
-      component: User
+      component: User,
+      children:[
+        {
+          path: "/user/my-info",
+          component: MyInfo
+        },
+        {
+          path: "/user/order-list",
+          component: OrderList 
+        }
+      ]
     }, {
       path: '/register',
       name: 'Register',

@@ -26,7 +26,7 @@
             <router-link to="/my" class="link">我的订单</router-link>
           </li>
           <li class="nav-item">
-            <router-link to="/user" class="link">我的MMall</router-link>
+            <router-link to="/user/my-info" class="link">我的MMall</router-link>
           </li>
           <li class="nav-item">
             <a href="javascript:;" class="link">关于MMall</a>
