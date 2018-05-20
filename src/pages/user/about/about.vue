@@ -1,20 +1,20 @@
 <template>
   <div>
     <user-header :title="title"></user-header>
-    我的订单页面
+   关于商城界面
   </div>
 </template>
 <script>
 import UserHeader from '../user-common/user-header'
 
 export default{
-  name: 'OrderList',
+  name: 'About',
   components: {
     UserHeader
   },
   data () {
     return {
-      title: '我的订单',
+      title: '关于商城',
     }
   }
 }

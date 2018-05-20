@@ -1,12 +1,15 @@
 <template>
   <div class="panel-title">
-      title
+    {{title}}
   </div>
 </template>
 <script>
 
 export default{
-  name: 'UserHeader'
+  name: 'UserHeader',
+  props: {
+    title: String
+  }
 }
 </script>
 

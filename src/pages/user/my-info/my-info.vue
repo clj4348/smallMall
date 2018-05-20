@@ -1,26 +1,26 @@
 <template>
   <div>
-    <user-header></user-header>
+    <user-header :title="title"></user-header>
     <div class="user-info">
       <div class="form-line">
         <span class="label">用户名：</span>
-        <span class="text">username</span>
+        <span class="text">{{userInfo.username}}</span>
       </div>
       <div class="form-line">
         <span class="label">电 话：</span>
-        <span class="text">phone</span>
+        <span class="text">{{userInfo.phone}}</span>
       </div>
       <div class="form-line">
         <span class="label">邮 箱：</span>
-        <span class="text">email</span>
+        <span class="text">{{userInfo.email}}</span>
       </div>
       <div class="form-line">
         <span class="label">问 题：</span>
-        <span class="text">question</span>
+        <span class="text">{{userInfo.question}}</span>
       </div>
       <div class="form-line">
         <span class="label">答 案：</span>
-        <span class="text">answer</span>
+        <span class="text">{{userInfo.answer}}</span>
       </div>
       <a class="btn btn-submit" href="./user-center-update.html">编辑</a>
     </div>
@@ -37,7 +37,11 @@ export default{
   data () {
     return {
       title: '个人中心',
+      userInfo: this.$store.state.token
     }
+  },
+  mounted(){
+    console.log(this.userInfo)
   }
 }
 </script>

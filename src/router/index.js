@@ -13,6 +13,8 @@ import Detail from '@/pages/detail/detail'
 
 import MyInfo from '@/pages/user/my-info/my-info'
 import OrderList from '@/pages/user/order-list/order-list'
+import About from '@/pages/user/about/about'
+import PassUpdate from '@/pages/user/pass-update/pass-update'
 
 Vue.use(Router)
 
@@ -41,6 +43,14 @@ const router =  new Router({
         {
           path: "/user/order-list",
           component: OrderList 
+        },
+        {
+          path: "/about",
+          component: About 
+        },
+        {
+          path: "/user/pass-update",
+          component: PassUpdate
         }
       ]
     }, {

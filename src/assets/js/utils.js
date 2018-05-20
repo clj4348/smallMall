@@ -29,7 +29,16 @@ class mm{
 		}
 		return tip;
 	}
-
+	getUrl(){
+		let strUrl = window.location.href;
+		let arrUrl = strUrl.split("/");
+		let strPage = arrUrl[arrUrl.length-1];
+		let indexof = strPage.indexOf("?");
+		if(indexof != -1){
+		  strPage = strPage.substr(0,strPage.indexOf("?"));
+		}
+		return strPage
+	}
 	// 获取url的参数
 	getUrlParam(name) {
 		let reg = new RegExp('(^|&)' + name + '=([^&]*)(&|$)');
@@ -119,9 +128,6 @@ class mm{
 			if(arrOne[i] !== arrTwo[i]) return false;
 		}
 		return true;
-	}
-	a(){
-		console.log(1)
 	}
 };
 let utils = new mm()
