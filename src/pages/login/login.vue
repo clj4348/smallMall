@@ -99,9 +99,8 @@ export default{
       .then((res) => {
         const status = res.data.status
         if(status === 0){
-          console.log(res.data.data);
-          this.utils.setItem('token', res.data.data); // 生成token
-          store.state.token = res.data.data // 赋值给vuex中的token
+          this.$store.commit('changeToken',res.data) // 赋值给vuex中的token
+          this.$store.commit('changeUserMsg',res.data) // 赋值给vuex中的token
           this.$router.go(-1) //返回上一页
         }else if(status === 1){
           this.userErr = res.data.msg

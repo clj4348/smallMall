@@ -3,16 +3,16 @@
     <div class="nav">
       <div class="w">
         <div class="user-info">
-          <span class="user not-login" v-if="userStatus == 1">
+          <span class="user not-login" v-if="this.user.status == 1">
             <router-link to="/login" class="link"  target="blank">登录</router-link>
             <router-link to="/register" class="link js-register">注册</router-link>
           </span>
           <span class="user login" v-else>
             <span class="link-text">
               欢迎，
-              <span class="username">{{username}}</span>
+              <span class="username">{{this.user.data.username}}</span>
               </span>
-            <span class="link js-logout"> 退出</span>
+            <span class="link js-logout" @click="logout"> 退出</span>
           </span>
         </div>
         <ul class="nav-list">
@@ -38,7 +38,8 @@
 </template>
 
 <script>
-import axios from 'axios' 
+import axios from 'axios'
+import { mapState } from 'vuex' 
   export default{
     name: 'Header',
     data () {
@@ -47,22 +48,44 @@ import axios from 'axios'
         username: '',
       }
     },
+    computed:{
+      ...mapState({
+        user: 'userMsg'
+      })
+    },
     methods:{
-      userInfo () {
-        axios.post('/api/user/get_user_info.do')
+      // 获取用户信息
+      getUserInfo(){
+        axios.post('/api/user/get_user_info.do',{})
         .then((res) => {
           if(res.data.status === 0){
-            this.userStatus = res.data.status
-            this.username = res.data.data.username
+            this.$store.commit('changeUserMsg',res.data)
+            this.$store.commit('changeToken',res.data)
+          }
+          if(res.data.status === 1){
+            this.$store.commit('removeUserMsg')
+            this.$store.commit('changeToken', null)
           }
         })
-        .catch((err) => {
-
+      },
+      // 退出登陆
+      logout(){
+        axios.post('/api/user/logout.do')
+        .then((res) => {
+          const status = res.data.status
+          if(status === 0){
+            console.log(this.user.status)
+            this.$store.commit('changeToken', null)
+            this.$store.commit('removeUserMsg')
+            this.$router.push('/login')
+          }else if(status === 1){
+            alert(res.data.msg)
+          }
         })
       }
     },
     mounted () {
-      this.userInfo()
+      this.getUserInfo()
     }
   }
 </script>

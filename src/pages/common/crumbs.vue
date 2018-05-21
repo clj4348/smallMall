@@ -4,7 +4,7 @@
         <div class="crumb-list">
             <router-link to="/" class="crumb-item">MMall</router-link>
             <span>&gt;</span>
-            <span class="crumb-item">{{title}}</span>
+            <router-link to="/about" class="crumb-item">{{$route.name}}</router-link>
         </div>
     </div>
   </div>
