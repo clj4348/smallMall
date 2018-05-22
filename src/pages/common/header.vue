@@ -17,10 +17,10 @@
         </div>
         <ul class="nav-list">
           <li class="nav-item">
-            <a href="javascript:;" class="link">
+            <router-link to="/cart" class="link">
               <i class="fa fa-shopping-cart"></i>
               购物车(<span class="cart-count">0</span>)
-            </a>
+            </router-link>
           </li>
           <li class="nav-item">
             <router-link to="/my" class="link">我的订单</router-link>

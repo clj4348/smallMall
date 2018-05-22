@@ -11,6 +11,7 @@ import Login from '@/pages/login/login'
 import Register from '@/pages/register/register'
 import List from '@/pages/list/list'
 import Detail from '@/pages/detail/detail'
+import Cart from '@/pages/cart/cart'
 
 import MyInfo from '@/pages/user/my-info/my-info'
 import OrderList from '@/pages/user/order-list/order-list'
@@ -91,11 +92,16 @@ const router =  new Router({
     },
     {
       path: '/detail',
-      name: 'Detail',
-      meta: {
-        title: '商品详情'
-      },
+      name: '商品详情',
       component: Detail
+    },
+    {
+      path: '/cart',
+      name: '我的购物车',
+      meta: {
+        requireAuth: true,
+      },
+      component: Cart
     }
   ]
 })
