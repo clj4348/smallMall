@@ -17,11 +17,12 @@
 			<span class="p-count-btn minus" @click="minus">-</span>
 		</div>
 		<div class="p-info-item">
-			<a class="btn cart-add">加入购物车</a>
+			<a class="btn cart-add" @click="createGoods">加入购物车</a>
 		</div>
 	</div>
 </template>
 <script>
+import axios from 'axios'
 export default{
 	name: 'Sku',
 	props:{
@@ -30,7 +31,8 @@ export default{
 	data(){
 		return {
 			count: 1,
-			stock: this.detailInfo.stock
+			stock: this.detailInfo.stock,
+			productId: this.utils.getUrlParam('productId')
 		}
 	},
 	methods: {
@@ -46,6 +48,20 @@ export default{
 				return
 			} 
 			this.count--
+		},
+		createGoods(){
+			axios.get('/api/cart/add.do', {
+				params:{
+					productId: this.productId,
+					count: this.count
+				}
+			})
+			.then((res) => {
+				this.$router.push('/cart')
+ 			})
+			.catch((err) => {
+
+			})
 		}
 	},
 	mounted () {

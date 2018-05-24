@@ -21,102 +21,94 @@ import InfoUpdate from '@/pages/user/info-update/info-update'
 
 Vue.use(Router)
 
-const router =  new Router({
+const router = new Router({
   mode: 'history',
-  routes: [
-    {
-      path: '/',
-      name: '首页',
-      component: Index
-    }, {
+  routes: [{
+    path: '/',
+    name: '首页',
+    component: Index
+  }, {
+    path: '/user/my-info',
+    name: '个人中心',
+    meta: {
+      requireAuth: true, // 需要登录页面
+    },
+    component: User,
+    children: [{
       path: '/user/my-info',
       name: '个人中心',
       meta: {
         requireAuth: true, // 需要登录页面
       },
-      component: User,
-      children:[{
-          path: '/user/my-info',
-          name: '个人中心',
-          meta: {
-            requireAuth: true, // 需要登录页面
-          },
-          component: MyInfo
-        },
-        {
-          path: "/user/order-list",
-          name: "我的订单",
-          meta: {
-            requireAuth: true, // 需要登录页面
-          },
-          component: OrderList 
-        },
-        {
-          path: "/about",
-          name: "关于商城",
-          component: About 
-        },
-        {
-          path: "/user/pass-update",
-          name: "修改密码",
-          meta: {
-            requireAuth: true, // 需要登录页面
-          },
-          component: PassUpdate
-        },
-        {
-          path: "/user/info-update",
-          name: "修改个人信息",
-          meta: {
-            requireAuth: true, // 需要登录页面
-          },
-          component: InfoUpdate
-        }
-      ]
+      component: MyInfo
     }, {
-      path: '/register',
-      name: 'Register',
-      component: Register
+      path: "/user/order-list",
+      name: "我的订单",
+      meta: {
+        requireAuth: true, // 需要登录页面
+      },
+      component: OrderList
     }, {
-      path: '/login',
-      name: 'Login',
-      component: Login
-    },
-    {
-      path: '/list',
-      name: 'List',
+      path: "/about",
+      name: "关于商城",
+      component: About
+    }, {
+      path: "/user/pass-update",
+      name: "修改密码",
       meta: {
-        title: '商品列表'
+        requireAuth: true, // 需要登录页面
       },
-      component: List
-    },
-    {
-      path: '/detail',
-      name: '商品详情',
-      component: Detail
-    },
-    {
-      path: '/cart',
-      name: '我的购物车',
+      component: PassUpdate
+    }, {
+      path: "/user/info-update",
+      name: "修改个人信息",
       meta: {
-        requireAuth: true,
+        requireAuth: true, // 需要登录页面
       },
-      component: Cart
-    }
-  ]
+      component: InfoUpdate
+    }]
+  }, {
+    path: '/register',
+    name: 'Register',
+    component: Register
+  }, {
+    path: '/login',
+    name: 'Login',
+    component: Login
+  }, {
+    path: '/list',
+    name: 'List',
+    meta: {
+      title: '商品列表'
+    },
+    component: List
+  }, {
+    path: '/detail',
+    name: '商品详情',
+    component: Detail
+  }, {
+    path: '/cart',
+    name: '我的购物车',
+    meta: {
+      requireAuth: true,
+    },
+    component: Cart
+  }]
 })
 // 登陆拦截
-router.beforeEach((to, from, next)=> {
-  if(to.meta.requireAuth){
-    if(store.state.token) {
+router.beforeEach((to, from, next) => {
+  if (to.meta.requireAuth) {
+    if (store.state.token) {
       next()
-    }else {
+    } else {
       next({
-        path:'/login',
-        query:{redirect: to.fullpath}
+        path: '/login',
+        query: {
+          redirect: to.fullpath
+        }
       })
     }
-  }else{
+  } else {
     next()
   }
 })

@@ -5,7 +5,7 @@
     <Crumbs></Crumbs>
     <div class="cart-wrap w">
       <cart-header></cart-header>
-      <cart-list></cart-list>
+      <cart-list :cartProductVoList="cartProductVoList"></cart-list>
       <cart-footer></cart-footer>
     </div>
     <Footer></Footer>
@@ -35,14 +35,26 @@ export default{
   },
   data () {
     return {
-      
+      cartProductVoList: [], // 购物车列表
+      cartTotalPrice: ''// 总金额
     }
   },
   methods: {
-    
+    cartList(){
+      axios.get('/api/cart/list.do', {})
+      .then((res) => {
+        // 购物车列表
+        this.cartProductVoList = res.data.data.cartProductVoList
+        // 总金额
+        this.cartTotalPrice = res.data.data.cartTotalPrice
+      })
+      .catch((err) => {
+
+      })
+    }
   },
   mounted () {
-    
+    this.cartList()
   }
 }
 </script>
