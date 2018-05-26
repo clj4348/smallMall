@@ -2,7 +2,10 @@
   <div class="cart-footer clearfix">
     <div class="select-con">
       <label>
-        <input type="checkbox" class="cart-select-all" checked="checked">
+        <div class="cart-select-all" @click="selectAll">
+          <a class="all-select-act iconfont" v-if="allChecked">&#xe616;</a>
+          <a v-else></a>
+        </div>
         <span>全选</span>
       </label>
     </div>
@@ -14,27 +17,26 @@
     </div>
     <div class="submit-con">
       <span>总价：</span>
-      <span class="submit-total">￥11312.9</span>
+      <span class="submit-total">￥{{cartTotalPrice.toFixed(2)}}</span>
       <span class="btn submit-btn">去结算</span>
     </div>
   </div>  
 </template>
 <script>
+import { mapState } from 'vuex'
   export default{
     name: 'CartFooter',
-    data () {
-      return {
-       
-      }
-    },
     computed:{
-     
+      ...mapState({
+        allChecked: 'totalSelection',
+        cartTotalPrice:'totalPrice'
+      })
     },
     methods:{
-       
+       selectAll(){
+          this.$emit('selectAllChecked', this.allChecked)
+       }
     },
-    mounted () {
-    }
   }
 </script>
 

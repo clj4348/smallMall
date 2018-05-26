@@ -88,7 +88,6 @@ import { mapState } from 'vuex'
         axios.get('/api/cart/get_cart_product_count.do')
         .then((res) => {
           this.$store.commit('changeCartCount', res.data.data)
-          console.log(res);
         })
       }
     },

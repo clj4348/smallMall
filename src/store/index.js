@@ -2,7 +2,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import { userMsg, token } from './user/state'
 import userMutations from './user/mutations'
-import { defaultCartCount } from './cart/state'
+import { defaultCartCount, setlectAllChecked, defaultCartTotalPrice } from './cart/state'
 import cartMutations from './cart/mutations'
 Vue.use(Vuex)
 
@@ -12,7 +12,9 @@ let store = new Vuex.Store({
 	state: {
 		token,	
 		userMsg,
-		cartCount:defaultCartCount
+		cartCount:defaultCartCount,
+		totalSelection: setlectAllChecked,
+		totalPrice : defaultCartTotalPrice
 	},
 	// 获取区属
 	getters: {
@@ -45,7 +47,9 @@ let store = new Vuex.Store({
 		removeToken: userMutations.removeToken,
 		changeUserMsg: userMutations.changeUserMsg,
 		removeUserMsg: userMutations.removeUserMsg,
-		changeCartCount: cartMutations.changeCartCount
+		changeCartCount: cartMutations.changeCartCount,
+		changeSelectAll: cartMutations.changeSelectAll,
+		changeTotalPrice:cartMutations.changeTotalPrice
 	}
 })
 

@@ -5,7 +5,10 @@
         <tr>
           <th class="cart-cell cell-check">
             <label>
-              <input type="checkbox" class="cart-select-all" checked="checked">
+              <div class="cart-select-all" @click="selectAll">
+                <a class="all-select-act iconfont" v-if="allChecked">&#xe616;</a>
+                <a v-else></a>
+              </div>
               <span>全选</span>
             </label>
           </th>
@@ -20,21 +23,19 @@
   </div>
 </template>
 <script>
+import { mapState } from 'vuex'
   export default{
     name: 'CartHeader',
-    data () {
-      return {
-       
-      }
-    },
     computed:{
-     
+      ...mapState({
+        allChecked: 'totalSelection'
+      })
     },
     methods:{
-       
+       selectAll(){
+          this.$emit('selectAllChecked', this.allChecked)
+       }
     },
-    mounted () {
-    }
   }
 </script>
 

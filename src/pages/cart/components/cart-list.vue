@@ -4,7 +4,10 @@
         <tbody>
         <tr>
           <td class="cart-cell cell-check">
-            <input type="checkbox" class="cart-select" checked="checked">
+            <div @click="productChecked(item)">
+              <a class="cart-select" v-if="item.productChecked === 0"></a>
+              <a class="cart-select cart-select-act iconfont" v-else>&#xe616;</a>
+            </div>
           </td>
           <td class="cart-cell cell-img">
             <a href="./detail.html?productId=30">
@@ -48,9 +51,44 @@ export default {
         count = count + this.cartList[i].quantity
       }
       return count
+    },
+    allSeletc() {
+      for(let i = 0 ; i< this.cartList.length; i++){
+        if(this.cartList[i].productChecked === 0){
+          return false
+        }
+      }
+      return true
     }
   },
   methods: {
+    productChecked(option){
+      option.productChecked = option.productChecked === 0 ? 1 : 0
+      // 勾选某个商品
+      if(option.productChecked === 1){
+        axios.get('/api/cart/select.do', {
+          params: {
+            productId:option.productId
+          }
+        })
+        .then((res) => {
+          this.$store.commit('changeTotalPrice', res.data.data.cartTotalPrice)
+        })
+        .catch((err) => {})
+      }else {
+        // 取消选中某个商品
+        axios.get('/api/cart/un_select.do', {
+          params: {
+            productId:option.productId
+          }
+        })
+        .then((res) => {
+          this.$store.commit('changeTotalPrice', res.data.data.cartTotalPrice)
+        })
+        .catch((err) => {})
+      }
+      this.$store.commit('changeSelectAll', this.allSeletc)
+    },
     // 更新单个商品的数量
     update(productId, count) {
       axios.get('/api/cart/update.do', {
@@ -60,6 +98,7 @@ export default {
           }
         })
         .then((res) => {
+          this.$store.commit('changeTotalPrice', res.data.data.cartTotalPrice)
           //console.log(res.data.data)    
         })
         .catch((err) => {})
@@ -106,24 +145,41 @@ export default {
 
 <style lang="stylus" scoped>
 .cart-wrap .cart-table
-    width: 100%
-    border-collapse: collapse
-    border: 1px solid #ebebeb
-    margin-bottom: 10px
-.cart-wrap .cart-table .cell-check 
+  width: 100%
+  border-collapse: collapse
+  border: 1px solid #ebebeb
+  margin-bottom: 10px
+  .cell-check 
     width: 30px
     padding-left: 20px
     text-align: left
-.cart-wrap .cart-list .cart-table .cell-img 
+    .cart-select
+      display: block
+      border: 1px solid #ccc
+      width: 15px
+      height: 15px
+      cursor: pointer
+      position: relative
+      -webkit-user-select: none;
+      -moz-user-select: none; 
+      -ms-user-select: none;
+      -o-user-select: none;
+      user-select: none; 
+      &.cart-select-act
+        background: #c60023
+        color: #fff
+        border: 1px solid #c60023
+        text-align: center
+  .cell-img 
     width: 80px
     padding: 10px
-.cart-wrap .cart-list .cart-table .cell-img .p-img 
-    width: 80px
-    height: 80px
-    border: 1px solid #ddd
-.cart-wrap .cart-table .cell-info .p-name 
+    .p-img
+      width: 80px
+      height: 80px
+      border: 1px solid #ddd
+  .cell-info .p-name 
     line-height: 18px
-.cart-wrap .cart-table .cell-count .count-btn
+  .cell-count .count-btn
     display: inline-block
     width: 20px
     height: 28px
@@ -136,7 +192,7 @@ export default {
     -webkit-user-select: none
     -ms-user-select: none
     user-select: none
-.cart-wrap .cart-table .cell-count .count-input
+  .cell-count .count-input
     width: 60px
     height: 28px
     line-height: 28px
