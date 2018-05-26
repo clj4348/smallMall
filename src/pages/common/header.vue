@@ -19,7 +19,7 @@
           <li class="nav-item">
             <router-link to="/cart" class="link">
               <i class="fa fa-shopping-cart"></i>
-              购物车(<span class="cart-count">0</span>)
+              购物车(<span class="cart-count">{{this.count}}</span>)
             </router-link>
           </li>
           <li class="nav-item">
@@ -50,12 +50,13 @@ import { mapState } from 'vuex'
     },
     computed:{
       ...mapState({
-        user: 'userMsg'
+        user: 'userMsg',
+        count: 'cartCount'
       })
     },
     methods:{
       // 获取用户信息
-      getUserInfo(){
+      getUserInfo () {
         axios.post('/api/user/get_user_info.do',{})
         .then((res) => {
           if(res.data.status === 0){
@@ -69,7 +70,7 @@ import { mapState } from 'vuex'
         })
       },
       // 退出登陆
-      logout(){
+      logout () {
         axios.post('/api/user/logout.do')
         .then((res) => {
           const status = res.data.status
@@ -82,10 +83,18 @@ import { mapState } from 'vuex'
             alert(res.data.msg)
           }
         })
+      },
+      cartCount () {
+        axios.get('/api/cart/get_cart_product_count.do')
+        .then((res) => {
+          this.$store.commit('changeCartCount', res.data.data)
+          console.log(res);
+        })
       }
     },
     mounted () {
       this.getUserInfo()
+      this.cartCount()
     }
   }
 </script>

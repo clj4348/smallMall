@@ -1,25 +1,18 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-
+import { userMsg, token } from './user/state'
+import userMutations from './user/mutations'
+import { defaultCartCount } from './cart/state'
+import cartMutations from './cart/mutations'
 Vue.use(Vuex)
-let token = null;
-let userMsg = {};
-try{
-	if(localStorage.userMsg){
-		userMsg = JSON.parse(localStorage.userMsg)
-	}
-	if(localStorage.token){
-		token = JSON.parse(localStorage.token)
-	}
-} catch(e){}
+
 
 let store = new Vuex.Store({
 	// 1. state
 	state: {
-		// 搜索的数据
-		keyword: '',
 		token,	
-		userMsg
+		userMsg,
+		cartCount:defaultCartCount
 	},
 	// 获取区属
 	getters: {
@@ -48,41 +41,11 @@ let store = new Vuex.Store({
 	},
 
 	mutations: {
-		changeToken(state, tokens){
-			state.token = tokens
-			try{
-				localStorage.token=JSON.stringify(tokens)
-			}catch(e){
-
-			}
-		},
-		removeToken(state){
-			state.token = null
-			localStorage.removeItem('token')
-		},
-		// state指的是state中的数据
-		changeUserMsg(state, userInfo){
-			state.userMsg = userInfo// 将传参设置给state的keyword
-			try{
-				localStorage.userMsg = JSON.stringify(userInfo)
-			}catch(e){
-
-			}
-		},
-		removeUserMsg(state){
-			const params = {
-				status: 1,
-				data:{
-					username: ''
-				}
-			}
-			state.userMsg = params
-			try{
-				localStorage.userMsg = JSON.stringify(params)
-			}catch(e){
-
-			}
-		}
+		changeToken: userMutations.changeToken,
+		removeToken: userMutations.removeToken,
+		changeUserMsg: userMutations.changeUserMsg,
+		removeUserMsg: userMutations.removeUserMsg,
+		changeCartCount: cartMutations.changeCartCount
 	}
 })
 
