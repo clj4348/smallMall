@@ -11,8 +11,8 @@
     </div>
     <div class="delete-con">
       <a class="cart-delete-seleced link">
-        <i class="fa fa-trash-o" aria-hidden="true"></i>
-        <span>删除选中</span>
+        <i class="fa fa-trash-o"></i>
+        <span @click="deleteProduct">删除选中</span>
       </a>
     </div>
     <div class="submit-con">
@@ -26,6 +26,14 @@
 import { mapState } from 'vuex'
   export default{
     name: 'CartFooter',
+    props:{
+      cartProductVoList: Array
+    },
+    data(){
+      return {
+        cartList: []
+      }
+    },
     computed:{
       ...mapState({
         allChecked: 'totalSelection',
@@ -33,10 +41,29 @@ import { mapState } from 'vuex'
       })
     },
     methods:{
-       selectAll(){
-          this.$emit('selectAllChecked', this.allChecked)
-       }
+      selectAll() {
+        this.$emit('selectAllChecked', this.allChecked)
+      },
+      deleteProduct() {
+        let productIds = ''
+        for(let item in this.cartList){
+          if(this.cartList[item].productChecked === 1){
+            if(item < this.cartList.length-1){
+              productIds = productIds + this.cartList[item].productId + ','
+            }else{
+              productIds = productIds + this.cartList[item].productId
+            }
+          }
+        }
+        this.$emit('deleteProduct', productIds)
+      }
     },
+    mounted(){
+      this.$watch('cartProductVoList', (newVal, oldVal) => {
+        this.cartProductVoList = newVal
+        this.cartList =  newVal
+      })
+    }
   }
 </script>
 

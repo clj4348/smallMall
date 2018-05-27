@@ -3,10 +3,21 @@
     <Header></Header>
     <Search></Search>
     <Crumbs></Crumbs>
-    <div class="cart-wrap w">
+    <div class="cart-wrap w" v-show="isCartProductVoList">
       <cart-header @selectAllChecked="allCheckeds"></cart-header>
-      <cart-list :cartProductVoList="cartProductVoList"></cart-list>
-      <cart-footer @selectAllChecked="allCheckeds"></cart-footer>
+      <cart-list :cartProductVoList="cartProductVoList"
+        @selectGoods="selectGoods"
+        @deleteProduct="deleteProduct"></cart-list>
+      <cart-footer 
+        @selectAllChecked="allCheckeds"
+        @deleteProduct="deleteProduct" 
+        :cartProductVoList="cartProductVoList"></cart-footer>
+    </div>
+    <div class="cart-wrap w" v-show="!isCartProductVoList">
+      <p class="err-tip">
+        <span>您的购物车空空如也，</span>
+        <router-link to="/">立即去购物</router-link>
+      </p>
     </div>
     <Footer></Footer>
   </div>
@@ -36,42 +47,77 @@ export default {
       cartProductVoList: [], // 购物车列表
     }
   },
+  computed:{
+    isCartProductVoList(){
+      return  this.cartProductVoList.length > 0 ? true : false
+    }
+  },
   methods: {
     selectAllReq() {
 
     },
     allCheckeds(opt) {
-      if (opt) {
-        for(let i = 0; i< this.cartProductVoList.length; i++){
-          this.cartProductVoList[i].productChecked = 0
+      if(this.cartProductVoList.length > 0){
+        if (opt) {
+          for(let i = 0; i< this.cartProductVoList.length; i++){
+            this.cartProductVoList[i].productChecked = 0
+          }
+          axios.get('/api/cart/un_select_all.do', {})
+            .then((res) => {
+              this.$store.commit('changeTotalPrice', res.data.data.cartTotalPrice)
+            })
+            .catch((err) => {})
+        } else {
+          for(let i = 0; i< this.cartProductVoList.length; i++){
+            this.cartProductVoList[i].productChecked = 1
+          }
+          axios.get('/api/cart/select_all.do', {})
+            .then((res) => {
+              this.$store.commit('changeTotalPrice', res.data.data.cartTotalPrice)
+            })
+            .catch((err) => {})
         }
-        axios.get('/api/cart/un_select_all.do', {})
-          .then((res) => {
-            this.$store.commit('changeTotalPrice', res.data.data.cartTotalPrice)
-          })
-          .catch((err) => {})
-      } else {
-        for(let i = 0; i< this.cartProductVoList.length; i++){
-          this.cartProductVoList[i].productChecked = 1
-        }
-        axios.get('/api/cart/select_all.do', {})
-          .then((res) => {
-            this.$store.commit('changeTotalPrice', res.data.data.cartTotalPrice)
-          })
-          .catch((err) => {})
+         this.$store.commit('changeSelectAll', !opt)
       }
-       this.$store.commit('changeSelectAll', !opt)
+    },
+    // 选中的购物车数量
+    selectGoods (cartArr) {
+      this.cartProductVoList = cartArr
     },
     cartList() {
       axios.get('/api/cart/list.do', {})
         .then((res) => {
           // 购物车列表
           this.cartProductVoList = res.data.data.cartProductVoList
+          console.log(this.cartProductVoList.length > 0);
           // 总金额
           this.$store.commit('changeTotalPrice', res.data.data.cartTotalPrice)
-          this.$store.commit('changeSelectAll', res.data.data.allChecked)
+          if(this.cartProductVoList.length > 0){
+            this.$store.commit('changeSelectAll', res.data.data.allChecked)
+          }else{
+            this.$store.commit('changeSelectAll', false)
+          }
+          
         })
         .catch((err) => {})
+    },
+    // 移除某个商品或多个商品
+    deleteProduct(params){
+      if(params != '' && params != undefined ){
+        axios.get('/api/cart/delete_product.do', {
+          params:{
+            productIds:params
+          }
+        })
+        .then((res) => {
+          // 购物车列表
+          this.cartProductVoList = res.data.data.cartProductVoList
+          // 总金额
+          this.$store.commit('changeTotalPrice', res.data.data.cartTotalPrice)
+          this.$store.commit('changeSelectAll', false)
+        })
+        .catch((err) => {})
+      }
     }
   },
   mounted() {

@@ -25,7 +25,7 @@
           </td>
           <td class="cart-cell cell-total">￥{{item.productTotalPrice.toFixed(2)}}</td>
           <td class="cart-cell cell-opera">
-            <a class="link cart-delete">删除</a>
+            <a class="link cart-delete" @click="deleteProduct(item.productId)">删除</a>
           </td>
         </tr>
       </tbody>
@@ -73,6 +73,7 @@ export default {
         })
         .then((res) => {
           this.$store.commit('changeTotalPrice', res.data.data.cartTotalPrice)
+          this.$emit('selectGoods', res.data.data.cartProductVoList)
         })
         .catch((err) => {})
       }else {
@@ -84,10 +85,12 @@ export default {
         })
         .then((res) => {
           this.$store.commit('changeTotalPrice', res.data.data.cartTotalPrice)
+           this.$emit('selectGoods', res.data.data.cartProductVoList)
         })
         .catch((err) => {})
       }
       this.$store.commit('changeSelectAll', this.allSeletc)
+
     },
     // 更新单个商品的数量
     update(productId, count) {
@@ -131,14 +134,17 @@ export default {
       this.oneProductTotalPrice(num, params.quantity)
       this.update(params.productId, params.quantity)
       this.count()
-    }
+    },
+    deleteProduct(option){
+      this.$emit('deleteProduct', option)
+    },
+
   },
   mounted() {
     this.$watch('cartProductVoList', (newVal, oldVal) => {
       this.cartProductVoList = newVal
       this.cartList = this.cartProductVoList
     })
-
   }
 }
 </script>
