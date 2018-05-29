@@ -12,6 +12,7 @@ import Register from '@/pages/register/register'
 import List from '@/pages/list/list'
 import Detail from '@/pages/detail/detail'
 import Cart from '@/pages/cart/cart'
+import Order from '@/pages/order/order'
 
 import MyInfo from '@/pages/user/my-info/my-info'
 import OrderList from '@/pages/user/order-list/order-list'
@@ -102,6 +103,14 @@ const router =  new Router({
         requireAuth: true,
       },
       component: Cart
+    },
+    {
+      path: '/order',
+      name: '订单确认',
+      meta: {
+        requireAuth: true,
+      },
+      component: Order
     }
   ]
 })

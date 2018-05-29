@@ -48,42 +48,46 @@ export default {
     }
   },
   computed:{
+    // 购物车是否为空
     isCartProductVoList(){
       return  this.cartProductVoList.length > 0 ? true : false
     }
   },
   methods: {
-    selectAllReq() {
-
-    },
+    // 全选与反选
     allCheckeds(opt) {
-      if(this.cartProductVoList.length > 0){
+        // 如果opt为真
         if (opt) {
+          // 所有商品为没选中状态
           for(let i = 0; i< this.cartProductVoList.length; i++){
             this.cartProductVoList[i].productChecked = 0
           }
+          // 取消全选接口
           axios.get('/api/cart/un_select_all.do', {})
             .then((res) => {
               this.$store.commit('changeTotalPrice', res.data.data.cartTotalPrice)
             })
             .catch((err) => {})
         } else {
+          // 所有商品为选中状态
           for(let i = 0; i< this.cartProductVoList.length; i++){
             this.cartProductVoList[i].productChecked = 1
           }
+          // 全选接口
           axios.get('/api/cart/select_all.do', {})
             .then((res) => {
               this.$store.commit('changeTotalPrice', res.data.data.cartTotalPrice)
             })
             .catch((err) => {})
         }
-         this.$store.commit('changeSelectAll', !opt)
-      }
+        // vuex中changeSelectAll的传值
+        this.$store.commit('changeSelectAll', !opt)
     },
     // 选中的购物车数量
     selectGoods (cartArr) {
       this.cartProductVoList = cartArr
     },
+    // 购物车列表
     cartList() {
       axios.get('/api/cart/list.do', {})
         .then((res) => {
@@ -114,7 +118,8 @@ export default {
           this.cartProductVoList = res.data.data.cartProductVoList
           // 总金额
           this.$store.commit('changeTotalPrice', res.data.data.cartTotalPrice)
-          this.$store.commit('changeSelectAll', false)
+          // 是否全选
+          this.$store.commit('changeSelectAll', res.data.data.allChecked)
         })
         .catch((err) => {})
       }

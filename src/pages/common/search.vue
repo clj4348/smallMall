@@ -2,7 +2,6 @@
   <div>
     <div class="header">
       <div class="w">
-      
         <router-link to="/" class="logo">MMall</router-link>
         <div class="search-con">
             <h1>{{keyword}}</h1>
@@ -55,15 +54,18 @@
 
 <style lang="stylus" scoped>
 @import '../../assets/css/varibles.styl'
-.header 
+.header
   .logo
     position: absolute
-    left: 60px
-    top: 34px
+    left: 50px
+    top: 44px
     display: block
+    width: 150px
     font-size: 36px
-    color: $subjectColor
-    font-weight: bold
+    font-weight: 700
+    color: #c60023
+    text-decoration: none
+    text-align: center
   .search-con
     padding: 40px 0 30px 250px
     .search-input
