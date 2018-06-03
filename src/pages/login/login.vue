@@ -1,6 +1,5 @@
 <template>
   <div>
-    <nav-simple></nav-simple>
     <div class="page-wrap">
     <div class="w">
       <div class="user-con">
@@ -43,22 +42,16 @@
       </div>
       </div>
     </div>
-    <footer-nav></footer-nav>
   </div>
 </template>
 <script>
 import axios from  'axios'
 import Qs from 'qs'
-import NavSimple from '../common/navSimple'
-import FooterNav from '../common/footer'
 import store from '../../store/index.js'
 
 export default{
   name: 'Login',
-  components: {
-    NavSimple,
-    FooterNav
-  },
+
   data () {
     return {
       userErr: '',

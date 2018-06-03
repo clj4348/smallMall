@@ -1,7 +1,5 @@
 <template>
   <div>
-    <Header></Header>
-    <Search></Search>
     <Crumbs></Crumbs>
     <div class="cart-wrap w" v-show="isCartProductVoList">
       <cart-header @selectAllChecked="allCheckeds"></cart-header>
@@ -19,25 +17,18 @@
         <router-link to="/">立即去购物</router-link>
       </p>
     </div>
-    <Footer></Footer>
   </div>
 </template>
 <script>
 import axios from 'axios'
-import Header from '../common/header'
-import Search from '../common/search'
 import Crumbs from '../common/crumbs'
-import Footer from '../common/footer'
 import CartHeader from './components/cart-header'
 import CartFooter from './components/cart-footer'
 import CartList from './components/cart-list'
 export default {
   name: 'Index',
   components: {
-    Header,
-    Footer,
     Crumbs,
-    Search,
     CartHeader,
     CartFooter,
     CartList

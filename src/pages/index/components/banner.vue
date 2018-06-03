@@ -40,5 +40,4 @@ export default{
     width: 830px
   &:nth-child(2n+1) 
      background-color: #d3dce6;
-  
 </style>

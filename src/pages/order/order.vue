@@ -1,36 +1,35 @@
 <template>
   <div>
-    <Header></Header>
-    <Search></Search>
     <Crumbs></Crumbs>
     <div class="confirm-wrap w">
       <Address></Address>
       <goods-list :orderList="orderList"></goods-list>
     </div>
-    <Footer></Footer>
+    <transition>
+      <div v-if="show">
+        <address-com @showHide="showHide"></address-com>
+      </div>
+    </transition>
   </div>
 </template>
 <script>
 import axios from 'axios'
-import Header from '../common/header'
-import Search from '../common/search'
 import Crumbs from '../common/crumbs'
-import Footer from '../common/footer'
 import Address from './components/address'
 import GoodsList from './components/goods-list'
+import AddressCom from './components/address-com'
 export default {
   name: 'Order',
   components: {
-    Header,
-    Footer,
     Crumbs,
-    Search,
     Address,
-    GoodsList
+    GoodsList,
+    AddressCom
   },
   data(){
     return {
-      orderList: {}
+      orderList: {},
+      show: false,
     }
   },
   methods:{
@@ -42,6 +41,10 @@ export default {
       .catch((arr) => {
 
       })
+    },
+    // 显示隐藏
+    showHide (flag) {
+      this.show = flag
     }
   },
   mounted () {

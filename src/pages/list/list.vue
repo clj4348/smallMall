@@ -1,8 +1,6 @@
 <template>
 	<div>
-		<Header></Header>
 		<!-- @search="search" -->
-		<Search @search="search"></Search>
 		<div class="crumb">
 		  <div class="w">
 		    <div class="crumb-con">
@@ -20,7 +18,6 @@
 				:size="size"
 				:pages="pages"></list-page>
 		</div>
-		<Footer></Footer>
 	</div>
 </template>
 <script>
@@ -35,9 +32,6 @@ import ListPage from './components/list-page'
 export default{
 	name: 'List',
 	components: {
-		Header,
-		Search,
-		Footer,
 		ListCon,
 		ListSort,
 		ListPage

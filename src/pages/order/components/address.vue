@@ -44,7 +44,6 @@ export default {
 }
 </script>
 <style lang="stylus" scoped>
-
   .address-item 
     margin: 20px 20px 0 0
     width: 200px

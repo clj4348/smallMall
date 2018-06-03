@@ -87,4 +87,5 @@
       font-weight: 700
       margin-right: 30px
       vertical-align: middle
+  
 </style>
