@@ -1,0 +1,69 @@
+.modal
+  overflow-y: auto
+.mask
+  position: fixed
+  top: 0
+  right: 0
+  bottom: 0
+  left: 0
+  z-index: 1000
+  background: rgba(0,0,0,.4)
+.modal .modal-container
+  width: 700px
+  margin: 50px auto
+  background: #fff
+  border-radius: 4px
+.modal .modal-container .modal-header
+  position: relative
+  padding: 15px
+  border-bottom: 1px solid #ccc
+.modal .modal-container .modal-header h1
+  font-size: 14px
+.modal .modal-container .modal-header .close
+  position: absolute
+  right: 20px
+  top: 20px
+  cursor: pointer
+.modal .modal-container .modal-body
+  padding: 15px
+.form .form-line
+  margin: 5px 0
+.form .form-line .label
+  cursor: pointer
+  width: 94px
+  display: block
+  float: left
+  text-align: right
+  margin-right: 10px
+  height: 30px
+  line-height: 30px
+.form .form-require
+  color: red
+.form .form-line .form-item
+  padding: 0 5px
+  height: 30px
+  line-height: 30px
+  outline: none
+  margin-right: 10px
+  border: 1px solid #e5e5e5
+.province-select, .city-select
+  position: relative
+  float: left
+  width: 200px
+  cursor: pointer
+.province-list, .city-list
+  position: absolute
+  background: #fff
+  width: (100% + 1px)
+  height: 200px
+  box-sizing: border-box
+  left: -1px
+  top: 30px
+  border: 1px solid #e5e5e5;
+  overflow-y: auto
+  border-top: 0
+  li
+    cursor: pointer
+    padding:0 5px
+    &:hover
+      background: #e5e5e5

@@ -2,14 +2,12 @@
   <div>
     <Crumbs></Crumbs>
     <div class="confirm-wrap w">
-      <Address></Address>
+      <Address @showHide="showHide" :addressList="addressList"></Address>
       <goods-list :orderList="orderList"></goods-list>
     </div>
-    <transition>
-      <div v-if="show">
-        <address-com @showHide="showHide"></address-com>
-      </div>
-    </transition>
+    <div v-if="show">
+      <address-com @showHide="showHide"></address-com>
+    </div>
   </div>
 </template>
 <script>
@@ -29,14 +27,30 @@ export default {
   data(){
     return {
       orderList: {},
+      addressList: [],
       show: false,
     }
   },
   methods:{
+    // 商品清单
     getOrderList () {
       axios.get('/api/order/get_order_cart_product.do')
       .then((res) => {
         this.orderList = res.data.data
+      })
+      .catch((arr) => {
+
+      })
+    },
+    getAddressList () {
+      axios.get('/api/shipping/list.do',{
+        params: {
+          pageNum: 1,
+          pageSize: 10
+        } 
+      })
+      .then((res) => {
+        this.addressList = res.data.data.list
       })
       .catch((arr) => {
 
@@ -48,6 +62,7 @@ export default {
     }
   },
   mounted () {
+    this.getAddressList()
     this.getOrderList()
   }
 }

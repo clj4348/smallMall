@@ -2,29 +2,22 @@
   <div>
     <h2 class="panel-title">收货地址</h2>
     <div class="panel-body address-list clearfix">
-      <a class="address-item" data-id="3851">
+      <a class="address-item" v-for="(item, index) of list" :key="item.id">
         <div class="address-title">
-          <span class="city">深圳 广东省</span>
-          <span class="name">（ clj 收 ）</span>
+          <span class="city">{{item.receiverProvince}} {{item.receiverCity}}</span>
+          <span class="name">（
+           {{item.receiverName}} 收 ）
+          </span>
         </div>
-        <div class="address-detail">松岗 13725645427</div>
+        <div class="address-detail">
+          {{item.receiverAddress}} {{item.receiverMobile}}
+        </div>
         <div class="address-opera">
           <span class="link address-update">编辑</span>
           <span class="link address-delete">删除</span>
         </div>
       </a>
-      <a class="address-item" data-id="3852">
-        <div class="address-title">
-          <span class="city">广州 广东省</span>
-          <span class="name">（ clj 收 ）</span>
-        </div>
-        <div class="address-detail"> 天河 136012341342 </div>
-        <div class="address-opera">
-          <span class="link address-update">编辑</span>
-          <span class="link address-delete">删除</span>
-        </div>
-      </a>
-      <div class="address-item add">
+      <div class="address-item add" @click="showHide">
         <div class="address-new">
           <i class="fa fa-plus"></i>
           <div class="text">使用新地址</div>
@@ -36,10 +29,28 @@
 <script>
 export default {
   name: 'Address',
+  props: {
+    addressList: Array
+  },
   data(){
     return {
-
+      list: []
     }
+  },
+  computed: {
+   
+  },
+  methods: {
+    showHide() {
+      this.$emit('showHide', true)
+    }
+  },
+  mounted () {
+    this.$watch('addressList', (newVal, oldVal) => {
+      this.addressList = newVal
+      this.list = newVal
+      console.log(this.list[1].receiverProvince)
+    })
   }
 }
 </script>
