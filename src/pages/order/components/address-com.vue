@@ -13,9 +13,9 @@
           <input class="form-item name"
             id="receiver-name"
             type="text"
-            v-model="dataForm.receiverName"
             placeholder="请输入收件人姓名"
-            value="">
+            :value="dataForm.receiverName"
+            @input="inName($event)">
         </div>
         <div class="form-line clearfix">
           <label class="label">
@@ -53,8 +53,8 @@
           <input class="form-item" 
             type="text"
             placeholder="请精确到门牌号" 
-            value=""
-            v-model="dataForm.receiverAddress">
+            :value="dataForm.receiverAddress"
+            @input="inNAddress($event)">
         </div>
         <div class="form-line clearfix">
           <label class="label">
@@ -64,7 +64,8 @@
             type="text"
             placeholder="请输入11位手机号"
             value=""
-            v-model="dataForm.receiverMobile">
+            maxlength="11" 
+            @input="inMobile($event)">
           </div>
           <div class="form-line clearfix">
             <label class="label">邮政编码:</label>
@@ -72,8 +73,8 @@
             id="receiver-zip"
             type="text"
             placeholder="如：100000" 
-            value=""
-            v-model="dataForm.receiverZip">
+            :value="dataForm.receiverZip"
+            @input="inZip($event)">
           </div>
           <div class="form-line clearfix">
             <input type="hidden" id="receiver-id" value="">
@@ -123,6 +124,23 @@ export default {
       }
       this.cityList = cities.getCities(option)
     },
+    // 这里主要考虑编辑页面需要绑定默认值
+    // 收件人名称双向绑定
+    inName(e){
+      this.dataForm.receiverName = e.target.value
+    },
+    // 详细地址双向绑定
+    inNAddress(e){
+      this.dataForm.receiverAddress = e.target.value
+    },
+    // 手机号双向数据绑定
+    inMobile(e){
+      this.dataForm.receiverMobile = e.target.value
+    },
+    // 邮政编码双向数据绑定
+    inZip(e){
+      this.receiverZip = e.target.value
+    },
     // 城市选择
     addCity(option){ 
       this.dataForm.receiverCity = option
@@ -150,6 +168,7 @@ export default {
       }).then((res) => {
         if(res.data.status == 0){
           this.showHide()
+          this.$emit('aginAddressList')
         }else{
           alert(res.data.msg)
         }

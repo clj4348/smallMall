@@ -2,11 +2,16 @@
   <div>
     <Crumbs></Crumbs>
     <div class="confirm-wrap w">
-      <Address @showHide="showHide" :addressList="addressList"></Address>
+      <Address @showHide="showHide"
+        @editAddress="editAddress"
+        @aginAddressList="aginAddressList"
+        :addressList="addressList">
+      </Address>
       <goods-list :orderList="orderList"></goods-list>
     </div>
     <div v-if="show">
-      <address-com @showHide="showHide"></address-com>
+      <address-com @showHide="showHide"
+        @aginAddressList="aginAddressList"></address-com>
     </div>
   </div>
 </template>
@@ -42,6 +47,9 @@ export default {
 
       })
     },
+    aginAddressList(){
+      this.getAddressList()
+    },
     getAddressList () {
       axios.get('/api/shipping/list.do',{
         params: {
@@ -59,6 +67,9 @@ export default {
     // 显示隐藏
     showHide (flag) {
       this.show = flag
+    },
+    editAddress(params){
+      console.log(params)
     }
   },
   mounted () {

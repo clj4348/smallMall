@@ -13,8 +13,8 @@
           {{item.receiverAddress}} {{item.receiverMobile}}
         </div>
         <div class="address-opera">
-          <span class="link address-update">编辑</span>
-          <span class="link address-delete">删除</span>
+          <span class="link address-update" @click="updateAddress(item)">编辑</span>
+          <span class="link address-delete" @click="delAddress(item.id)">删除</span>
         </div>
       </a>
       <div class="address-item add" @click="showHide">
@@ -27,6 +27,7 @@
   </div>
 </template>
 <script>
+import axios from 'axios'
 export default {
   name: 'Address',
   props: {
@@ -43,13 +44,33 @@ export default {
   methods: {
     showHide() {
       this.$emit('showHide', true)
+    },
+    updateAddress(params) {
+      this.$emit('editAddress', params)
+      this.showHide()
+    },
+    // 删除地址
+    delAddress(option) {
+      axios.get('/api/shipping/del.do', {
+        params:{
+          shippingId: option
+        }
+      }).then((res) => {
+          if(res.data.status == 0){
+            alert(res.data.data)
+            this.$emit('aginAddressList')
+          }else{
+            alert(res.data.data)
+          }
+      }).catch((err) => {
+
+      })
     }
   },
   mounted () {
     this.$watch('addressList', (newVal, oldVal) => {
       this.addressList = newVal
       this.list = newVal
-      console.log(this.list[1].receiverProvince)
     })
   }
 }
