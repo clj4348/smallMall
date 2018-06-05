@@ -17,7 +17,7 @@
           <span class="link address-delete" @click="delAddress(item.id)">删除</span>
         </div>
       </a>
-      <div class="address-item add" @click="showHide">
+      <div class="address-item add" @click="creatAddres">
         <div class="address-new">
           <i class="fa fa-plus"></i>
           <div class="text">使用新地址</div>
@@ -44,10 +44,16 @@ export default {
   methods: {
     showHide() {
       this.$emit('showHide', true)
+      
+    },
+    creatAddres(){
+      this.$emit('isEdit', 0)
+      this.showHide()
     },
     updateAddress(params) {
       this.$emit('editAddress', params)
       this.showHide()
+      this.$emit('isEdit', 1)
     },
     // 删除地址
     delAddress(option) {

@@ -46,7 +46,7 @@
       }
     },
     mounted(){
-       this.$watch('orderList', (newVal, oldVal) => {
+      this.$watch('orderList', (newVal, oldVal) => {
         this.orders = newVal.orderItemVoList
         this.totalPrice = newVal.productTotalPrice
       })

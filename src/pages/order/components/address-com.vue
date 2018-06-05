@@ -63,7 +63,7 @@
             <input class="form-item" 
             type="text"
             placeholder="请输入11位手机号"
-            value=""
+            :value="dataForm.receiverMobile"
             maxlength="11" 
             @input="inMobile($event)">
           </div>
@@ -90,24 +90,21 @@ import axios from 'axios'
 import cities from '../../../assets/js/citys.js'
 export default {
   name: 'AddressCom',
+  props: {
+    isEdit: Number, // 0 为新增， 1代表编辑
+    editObj: Object,
+    createAdress: Object,
+    isUpdate: Number
+  },
   data(){
     return {
-      dataForm: {
-        userId: this.$store.state.userMsg.data.id,
-        receiverName: '',
-        receiverPhone: '010',
-        receiverMobile: '',
-        receiverProvince: '请选择', // 省
-        receiverCity: '请选择', // 市
-        receiverAddress: '', // 详细地址
-        receiverZip: '' // 邮政编码
-      },
+      dataForm: {},
       phoneReg: /^1\d{10}$/, //手机号正则
       provinShow:false,
       cityShow: false,
       provinceList: cities.getProvinces(),
       cityList: [],
-      selectDef: ''
+      isUpdataAddress: 0
     }
   },
   methods: {
@@ -139,7 +136,7 @@ export default {
     },
     // 邮政编码双向数据绑定
     inZip(e){
-      this.receiverZip = e.target.value
+      this.dataForm.receiverZip = e.target.value
     },
     // 城市选择
     addCity(option){ 
@@ -163,8 +160,27 @@ export default {
       if(this.receiverCity()) return
       if(this.receiverAddress()) return
       if(this.isPhone()) return
-      axios.get('api/shipping/add.do', {
-        params:this.dataForm
+      let url = ''
+      let datas = {}
+      if(this.isUpdate == 0){
+        url = '/api/shipping/add.do'
+        datas = this.dataForm
+      }else{
+        url = '/api/shipping/update.do'
+        datas = {
+          id: this.dataForm.id,
+          receiverName: this.dataForm.receiverName,
+          receiverPhone: this.dataForm.receiverPhone,
+          receiverMobile: this.dataForm.receiverMobile,
+          receiverProvince: this.dataForm.receiverProvince,
+          receiverCity: this.dataForm.receiverCity,
+          receiverAddress: this.dataForm.receiverAddress,
+          receiverZip:this.dataForm.receiverZip
+        }
+      }
+      
+      axios.get(url, {
+        params: datas
       }).then((res) => {
         if(res.data.status == 0){
           this.showHide()
@@ -228,6 +244,12 @@ export default {
     bodyTap.onclick = function(){
       _this.provinShow = false
       _this.cityShow = false
+    }
+    console.log(this.createAdress)
+    if(this.isUpdate == 0){
+      this.dataForm = this.createAdress
+    }else{
+      this.dataForm = this.editObj
     }
   }
 }

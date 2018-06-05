@@ -5,13 +5,17 @@
       <Address @showHide="showHide"
         @editAddress="editAddress"
         @aginAddressList="aginAddressList"
-        :addressList="addressList">
+        :addressList="addressList"
+        @isEdit="isEdit">
       </Address>
       <goods-list :orderList="orderList"></goods-list>
     </div>
     <div v-if="show">
       <address-com @showHide="showHide"
-        @aginAddressList="aginAddressList"></address-com>
+        @aginAddressList="aginAddressList"
+        :editObj="editObj"
+        :isUpdate="isUpdate"
+        :createAdress="createAdress"></address-com>
     </div>
   </div>
 </template>
@@ -34,6 +38,18 @@ export default {
       orderList: {},
       addressList: [],
       show: false,
+      createAdress:{
+        userId: this.$store.state.userMsg.data.id,
+        receiverName: '',
+        receiverPhone: '010',
+        receiverMobile: '',
+        receiverProvince: '请选择', // 省
+        receiverCity: '请选择', // 市
+        receiverAddress: '', // 详细地址
+        receiverZip: '' // 邮政编码
+      },
+      isUpdate: 0,
+      editObj: {}
     }
   },
   methods:{
@@ -68,8 +84,11 @@ export default {
     showHide (flag) {
       this.show = flag
     },
+    isEdit(flg){
+      this.isUpdate = flg
+    },
     editAddress(params){
-      console.log(params)
+      this.editObj = params
     }
   },
   mounted () {
