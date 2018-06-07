@@ -2,7 +2,7 @@
   <div>
     <h2 class="panel-title">收货地址</h2>
     <div class="panel-body address-list clearfix">
-      <a class="address-item" v-for="(item, index) of list" :key="item.id">
+      <a class="address-item" :class="{'active': shippingId === item.id}" @click="shipping(item.id)" v-for="(item, index) of list" :key="item.id">
         <div class="address-title">
           <span class="city">{{item.receiverProvince}} {{item.receiverCity}}</span>
           <span class="name">（
@@ -13,8 +13,8 @@
           {{item.receiverAddress}} {{item.receiverMobile}}
         </div>
         <div class="address-opera">
-          <span class="link address-update" @click="updateAddress(item)">编辑</span>
-          <span class="link address-delete" @click="delAddress(item.id)">删除</span>
+          <span class="link address-update" @click.stop="updateAddress(item)">编辑</span>
+          <span class="link address-delete" @click.stop="delAddress(item.id)">删除</span>
         </div>
       </a>
       <div class="address-item add" @click="creatAddres">
@@ -35,7 +35,8 @@ export default {
   },
   data(){
     return {
-      list: []
+      list: [],
+      shippingId: ''
     }
   },
   computed: {
@@ -44,7 +45,10 @@ export default {
   methods: {
     showHide() {
       this.$emit('showHide', true)
-      
+    },
+    shipping(options){
+      this.shippingId = options
+      this.$emit('shipping', options)
     },
     creatAddres(){
       this.$emit('isEdit', 0)
@@ -90,6 +94,8 @@ export default {
     padding: 10px
     border: 3px dashed #ccc
     cursor: pointer
+    &.active 
+      border: 3px dashed #c60023;
     .address-title
       font-size: 12px
       color: #666
@@ -111,5 +117,5 @@ export default {
       padding: 6px
       text-align: center
       color: #ccc
-
+    
 </style>

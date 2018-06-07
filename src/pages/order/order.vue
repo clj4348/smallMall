@@ -6,9 +6,11 @@
         @editAddress="editAddress"
         @aginAddressList="aginAddressList"
         :addressList="addressList"
-        @isEdit="isEdit">
+        @isEdit="isEdit"
+        @shipping="shipping">
       </Address>
-      <goods-list :orderList="orderList"></goods-list>
+      <goods-list :orderList="orderList"
+        :shippingId="shippingId"></goods-list>
     </div>
     <div v-if="show">
       <address-com @showHide="showHide"
@@ -49,7 +51,8 @@ export default {
         receiverZip: '' // 邮政编码
       },
       isUpdate: 0,
-      editObj: {}
+      editObj: {},
+      shippingId: ''
     }
   },
   methods:{
@@ -62,6 +65,9 @@ export default {
       .catch((arr) => {
 
       })
+    },
+    shipping(options){
+      this.shippingId = options.toString()
     },
     aginAddressList(){
       this.getAddressList()

@@ -13,12 +13,14 @@ import List from '@/pages/list/list'
 import Detail from '@/pages/detail/detail'
 import Cart from '@/pages/cart/cart'
 import Order from '@/pages/order/order'
+import Payment from '@/pages/payment/payment'
 
 import MyInfo from '@/pages/user/my-info/my-info'
 import OrderList from '@/pages/user/order-list/order-list'
 import About from '@/pages/user/about/about'
 import PassUpdate from '@/pages/user/pass-update/pass-update'
 import InfoUpdate from '@/pages/user/info-update/info-update'
+
 
 Vue.use(Router)
 
@@ -111,6 +113,14 @@ const router =  new Router({
         requireAuth: true,
       },
       component: Order
+    },
+    {
+      path: '/payment',
+      name: '订单支付',
+      meta: {
+        requireAuth: true,
+      },
+      component: Payment
     }
   ]
 })

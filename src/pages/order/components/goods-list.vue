@@ -29,20 +29,49 @@
     <div class="submit-con">
       <span>订单总价：</span>
       <span class="submit-total">￥{{totalPrice}}</span>
-      <span class="btn order-submit">提交订单</span>
+      <span class="btn order-submit" @click="creatPay">提交订单</span>
     </div>
   </div>
 </template>
 <script>
+import axios from 'axios'
   export default {
     name: 'GoodsList',
     props: {
-      orderList: Object
+      orderList: Object,
+      shippingId: String
     },
     data(){
       return {
         orders: [],
         totalPrice: 0
+      }
+    },
+    methods: {
+      creatPay(){
+        if(this.shippingId == '' || this.shippingId == undefined){
+          alert('请选中收货地址')
+          return 
+        }
+        axios.get('/api/order/create.do', {
+          params: {
+            shippingId: this.shippingId
+          }
+        }).then((res) => {
+          if(res.data.status == 0){
+            this.$router.push({
+              path: '/payment',
+              params: {
+                orderNo: res.data.data.orderNo
+              },
+              query: {
+                  orderNo: res.data.data.orderNo
+              }
+            })
+          }
+        }).catch((err) => {
+          console.log(err)
+        })
       }
     },
     mounted(){
