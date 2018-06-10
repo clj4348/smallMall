@@ -5,7 +5,7 @@
     </div>
     <div v-else>
       <Header></Header>
-      <Search></Search>
+      <Search v-if="searchUrl"></Search>
     </div>
     <router-view />
     <Footer></Footer>
@@ -31,21 +31,32 @@ export default {
     }
   },
   computed: {
-    urlCom() {
-      // 监听路由的变化
+    urlParam() {
       let strUrl = this.$route.path;
       let arrUrl = strUrl.split("/");
       let strPage = arrUrl[arrUrl.length-1];
       let indexof = strPage.indexOf("?");
-      console.log(strUrl)
-      if(indexof != -1){
-        strPage = strPage.substr(0,strPage.indexOf("?"));
+      return {
+        strPage,
+        indexof
+      }
+    },
+    urlCom() {
+      // 监听路由的变化
+      if(this.urlParam.indexof != -1){
+        this.urlParam.strPage = this.urlParam.strPage.substr(0,this.urlParam.strPage.indexOf("?"));
       }
       
-      if(strPage == 'login' || strPage == 'register'){
+      if(this.urlParam.strPage == 'login' || this.urlParam.strPage == 'register'){
         return true
       }
       return false
+    },
+    searchUrl(){
+      if(this.urlParam.strPage == 'list'){
+        return false
+      }
+      return true
     }
   },
   mounted(){
