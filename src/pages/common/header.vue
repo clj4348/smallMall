@@ -4,32 +4,33 @@
       <div class="w">
         <div class="user-info">
           <span class="user not-login" v-if="this.user.status == 1">
-            <router-link to="/login" class="link"  target="blank">登录</router-link>
-            <router-link to="/register" class="link js-register">注册</router-link>
+            <router-link to="/login" class="hear-link">登录</router-link>
+            <span class="hr">|</span>
+            <router-link to="/register" class="hear-link">注册</router-link>
           </span>
           <span class="user login" v-else>
             <span class="link-text">
               欢迎，
               <span class="username">{{this.user.data.username}}</span>
               </span>
-            <span class="link js-logout" @click="logout"> 退出</span>
+            <span class="hear-link" @click="logout"> 退出</span>
           </span>
         </div>
         <ul class="nav-list">
           <li class="nav-item">
-            <router-link to="/cart" class="link">
+            <router-link to="/cart" class="hear-link">
               <i class="fa fa-shopping-cart"></i>
-              购物车(<span class="cart-count">{{this.count}}</span>)
+              购物车 <span class="cart-count" v-if="count != 0">({{this.count}})</span>
             </router-link>
           </li>
           <li class="nav-item">
-            <router-link to="/my" class="link">我的订单</router-link>
+            <router-link class="hear-link" to="/user/order-list">我的订单</router-link>
           </li>
           <li class="nav-item">
-            <router-link to="/user/my-info" class="link">我的MMall</router-link>
+            <router-link class="hear-link" to="/user/my-info">我的MMall</router-link>
           </li>
           <li class="nav-item">
-            <a href="javascript:;" class="link">关于MMall</a>
+            <a href="javascript:;" class="hear-link">关于MMall</a>
           </li>
         </ul>
       </div>
@@ -99,19 +100,31 @@ import { mapState } from 'vuex'
 </script>
 
 <style lang="stylus" scoped>
+@import '../../assets/css/varibles.styl'
 .nav
-  background: #eee
+  background: $heard-bg
   height: 30px
   line-height: 30px
   .user
     float: left
+    .link-text
+      color: #b0b0b0
     .login
       display: none
-      .link
-        margin-right: 5px
   .nav-list
     float: right
     .nav-item
       display: inline-block
-      margin-left: 5px
+      margin-left: 15px
+.hear-link
+  color: #b0b0b0
+  font-size: $fs-14
+  cursor: pointer
+  &:hover
+    color: #fff
+.hr
+  position: relative
+  top: -1px
+  margin: 0 5px
+  color: #999
 </style>

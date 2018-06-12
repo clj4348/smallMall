@@ -57,10 +57,8 @@
 .header
   .logo
     position: absolute
-    left: 50px
     top: 44px
     display: block
-    width: 150px
     font-size: 36px
     font-weight: 700
     color: #c60023
