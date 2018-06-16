@@ -1,9 +1,10 @@
+/* 省略号 */
 ellipsis()
   overflow: hidden
   white-space: nowrap
   text-overflow: ellipsis
   
-/* 垂直剧中的方法 */
+/* 垂直居中的方法 */
 posi-center()
   position: absolute
   top: 0
@@ -12,6 +13,13 @@ posi-center()
   bottom: 0
   margin: auto
   
+/* 这里是单边的垂直居中方法 */
+posi-top-bottom()
+  position: absolute
+  top: 50%
+  transform: translateY(-50%)
+
+// 垂直居中 transform: translate(-50%, -50%) 会使元素的宽为一半的大小
 posi-trans()
   position: absolute
   top: 50%

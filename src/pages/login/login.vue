@@ -1,6 +1,5 @@
 <template>
-  <div>
-    <div class="page-wrap">
+  <div class="page-wrap">
     <div class="w">
       <div class="user-con">
         <div class="user-title">用户登录</div>
@@ -39,7 +38,6 @@
             <router-link class="link" to="/register">免费注册</router-link>
           </div>
         </div>
-      </div>
       </div>
     </div>
   </div>
@@ -108,20 +106,25 @@ export default{
 }
 </script>
 <style lang="stylus" scoped>
+@import '../../assets/css/mixin.styl'
 /* 最外层容器 */
+$border-color= #e5e5e5
 .page-wrap
-  padding: 40px 0
-  background: #e72955
-  
+  width: 100%
+  height: 500px
+  background: url(../../assets/img/login-bg.jpg) no-repeat center
+  .w
+    position: relative
+    height: 100% 
 .user-con
-  position: relative
-  margin:0 auto
+  right: 20px
   width: 400px
   background: #fff
+  posi-top-bottom()
   .user-title
     text-align: center
     padding: 10px 0
-    border-bottom: 1px solid #ddd
+    border-bottom: 1px solid $border-color
     font-size: 18px
     font-weight: bold
     color: #666
@@ -156,14 +159,14 @@ export default{
       font-size: 28px
       color: #d3d3d3
       text-align: center
-      border-right: 1px solid #bdbdbd
+      border-right: 1px solid $border-color
     .user-content
       padding: 10px 0 10px 50px
       width: 308px
       height: 18px
       line-height: 18px
       font-size: 15px
-      border: 1px solid #bdbdbd
+      border: 1px solid $border-color
 .btn-submit
   width: 100%
   padding: 2px 0
@@ -176,5 +179,6 @@ export default{
   .link
     margin-left: 10px
     color: #999
-
+    &:hover
+      color: #c60023
 </style>
