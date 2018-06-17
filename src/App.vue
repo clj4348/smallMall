@@ -47,7 +47,7 @@ export default {
         this.urlParam.strPage = this.urlParam.strPage.substr(0,this.urlParam.strPage.indexOf("?"));
       }
       
-      if(this.urlParam.strPage == 'login' || this.urlParam.strPage == 'register'){
+      if(this.urlParam.strPage == 'login' || this.urlParam.strPage == 'register' || this.urlParam.strPage == 'forget-password'){
         return true
       }
       return false
@@ -70,5 +70,5 @@ export default {
 </script>
 
 <style lang="stylus">
-  
+
 </style>

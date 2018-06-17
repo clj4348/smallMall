@@ -64,7 +64,6 @@ export default{
       .then((res) => {
         this.contentlist=res.data.data.list
         this.paginate = res.data.data
-        console.log(res)
       })
       .catch((err) => {
 

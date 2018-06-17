@@ -34,7 +34,7 @@
           </div>
           <a class="btn btn-submit" @click="login">登录</a>
           <div class="link-item">
-            <router-link class="link" to="./user-pass-reset.html">忘记密码</router-link>
+            <router-link class="link" to="/forget-password">忘记密码</router-link>
             <router-link class="link" to="/register">免费注册</router-link>
           </div>
         </div>

@@ -66,6 +66,11 @@ export default [
       component: Login
     },
     {
+      path: '/forget-password',
+      name: '忘记密码',
+      component: () => import('@/pages/forget-password/forget-password')
+    },
+    {
       path: '/list',
       name: 'List',
       meta: {
@@ -102,4 +107,5 @@ export default [
       },
       component: Payment
     }
+ 
   ]
