@@ -76,7 +76,6 @@ import { mapState } from 'vuex'
         .then((res) => {
           const status = res.data.status
           if(status === 0){
-            console.log(this.user.status)
             this.$store.commit('changeToken', null)
             this.$store.commit('removeUserMsg')
             this.$router.push('/login')
