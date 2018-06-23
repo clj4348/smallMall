@@ -27,6 +27,14 @@ export default [
       component: User,
       children:[
         {
+          path: "/user/my-info",
+          name: "个人中心",
+          meta: {
+            requireAuth: true, // 需要登录页面
+          },
+          component: MyInfo
+        },
+        {
           path: "/user/order-list",
           name: "我的订单",
           meta: {

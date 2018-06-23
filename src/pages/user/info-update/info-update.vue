@@ -48,21 +48,27 @@
 import axios from  'axios'
 import Qs from 'qs'
 import UserHeader from '../user-common/user-header'
+import { mapState } from 'vuex'
 
 export default{
   name: 'PassUpdate',
   components: {
     UserHeader
   },
+  computed: {
+    ...mapState({
+      userMsg:'token'
+    })
+  },
   data () {
     return {
       title: '修改个人信息',
-      userInfo: this.$store.state.token
+      userInfo: {}
     }
   },
   methods: {
     editUserInfo(event, val){
-      let el = event.currentTarget
+      let el = event.target
       switch(val) {
         case 'phone':
           this.userInfo.phone = el.value
@@ -100,7 +106,6 @@ export default{
                 this.$router.go(-1) //返回上一页
               }else if(infoStatus === 10){
                 alert(resInfo.data.msg)
-                this.$router.push('/login') // 回到登陆页面
               }
             })
           }else if(status === 1){
@@ -108,6 +113,9 @@ export default{
           }
       })
     },
+  },
+  mounted(){
+    this.userInfo = this.userMsg.data
   }
 }
 </script>
