@@ -9,13 +9,14 @@ import 'element-ui/lib/theme-chalk/index.css';
 import './assets/css/layout.styl'
 import './assets/css/reset.css'
 import utils from './assets/js/utils.js'
-import { Carousel, CarouselItem} from 'element-ui'
+import { Carousel, CarouselItem,Pagination} from 'element-ui'
 import axios from './assets/js/http.js'
 Vue.prototype.axios = axios
 Vue.prototype.utils = utils
 
 Vue.use(Carousel)
 Vue.use(CarouselItem)
+Vue.use(Pagination)
 
 Vue.config.productionTip = false
 

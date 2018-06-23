@@ -12,44 +12,56 @@
       </tbody>
     </table>
     <table class="order-list-table order-item">
-      <tbody>
+      <tbody v-for="(item, index) in orderList" :key="item.orderNo">
         <tr>
           <td class="order-info" colspan="6">
             <span class="order-text">
               <span>订单号：</span>
-              <a class="link" href="./order-detail.html?orderNumber=1528377421067">1528377421067</a>
+              <a class="link" href="./order-detail.html?orderNumber=1528377421067">{{item.orderNo}}</a>
             </span>
-            <span class="order-text">2018-06-07 21:17:01</span>
+            <span class="order-text">{{item.createTime}}</span>
             <span class="order-text">
-              <span>收件人：asdf</span>
+              <span>收件人：{{item.receiverName}}</span>
             </span>
             <span class="order-text">
-              <span>订单状态：已取消</span>
+              <span>订单状态：{{item.statusDesc}}</span>
             </span>
             <span class="order-text">
               <span>订单总价：</span>
-              <span class="enhance">￥6997</span>
+              <span class="enhance">￥{{item.payment}}</span>
             </span>
             <a class="link pull-right" href="./order-detail.html?orderNumber=1528377421067">查看详情&gt;</a>
           </td>
       </tr>
-      <tr>
+      <tr v-for="orderItem in item.orderItemVoList">
         <td class="order-list-cell cell-img">
-          <a href="./detail.html?productId=26" target="_blank">
-            <img class="p-img" src="http://img.happymmall.com/241997c4-9e62-4824-b7f0-7425c3c28917.jpeg" alt="测试使用Apple iPhone 7 Plus (A1661) 128G手机">
+          <a href="./detail.html?productId=26">
+            <img class="p-img" :src="'http://img.happymmall.com/' + orderItem.productImage" alt="测试使用Apple iPhone 7 Plus (A1661) 128G手机">
           </a>
         </td>
         <td class="order-list-cell cell-info">
           <a class="link p-name" href="./detail.html?productId=26" target="_blank">测试使用Apple iPhone 7 Plus (A1661) 128G手机</a>
         </td>
-        <td class="order-list-cell cell-price">￥6997</td>
-        <td class="order-list-cell cell-count">1</td>
-        <td class="order-list-cell cell-total">￥6997</td>
+        <td class="order-list-cell cell-price">￥{{orderItem.currentUnitPrice}}</td>
+        <td class="order-list-cell cell-count">{{orderItem.quantity}}</td>
+        <td class="order-list-cell cell-total">￥{{orderItem.totalPrice}}</td>
       </tr>
     </tbody>
     </table>
+    <div class="pagination" v-if="pages > 1">
+      <el-pagination
+        @size-change="handleSizeChange"
+        @current-change="handleCurrentChange"
+        :page-size="pageSize"
+        background
+        :pager-count="5"
+        layout="prev, pager, next"
+        :total="totalSize">
+      </el-pagination>
+    </div>
   </div>
 </template>
+
 <script>
 
 export default{
@@ -57,7 +69,37 @@ export default{
   data () {
     return {
       title: '我的订单',
+      pageSize: 10,
+      pageNum: 1,
+      pages: 1,
+      totalSize: 0,
+      orderList: []
     }
+  },
+  methods: {
+    getOrderList(){
+      this.axios.get('/api/order/list.do',{
+        pageSize: this.pageSize,
+        pageNum: this.pageNum
+      }).then((res) => {
+        this.totalSize = res.data.total
+        this.orderList = res.data.list
+        this.pages = res.data.pages 
+        console.log(this.pages)
+        console.log(this.totalSize)
+      })
+    },
+    handleSizeChange(val){
+      console.log(val)
+    },
+    handleCurrentChange(val){
+      this.pageNum = val
+      this.getOrderList()
+    }
+  },
+
+  mounted() {
+    this.getOrderList()
   }
 }
 </script>
@@ -73,7 +115,9 @@ export default{
 .order-list-cell
   color: #666
   border-bottom: 1px solid #eee
-.order-list-table .cell-count,.order-list-table .cell-price,.order-list-table .cell-total
+.order-list-table .cell-count,
+.order-list-table .cell-price,
+.order-list-table .cell-total
   width: 15%
   text-align: center
 .order-list-table.header
@@ -99,4 +143,12 @@ export default{
   margin-right: 25px
   color: #999
   font-size: 12px
+.enhance
+  font-weight: 700
+  color: #c60023
+.pagination
+  margin: auto
+  display: table-cell
+  text-align: center
+  width: 1%
 </style>
