@@ -43,6 +43,14 @@ export default [
           component: () => import('@/pages/user/order-list/order-list')
         },
         {
+          path: "/user/order-info",
+          name: "订单信息",
+          meta: {
+            requireAuth: true, // 需要登录页面
+          },
+          component: () => import('@/pages/user/order-info/order-info')
+        },
+        {
           path: "/about",
           name: "关于商城",
           component: About 

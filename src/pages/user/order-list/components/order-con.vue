@@ -30,7 +30,7 @@
               <span>订单总价：</span>
               <span class="enhance">￥{{item.payment}}</span>
             </span>
-            <a class="link pull-right" href="./order-detail.html?orderNumber=1528377421067">查看详情&gt;</a>
+            <router-link class="link pull-right" to="/user/order-info">查看详情&gt;</router-link>
           </td>
       </tr>
       <tr v-for="orderItem in item.orderItemVoList">
