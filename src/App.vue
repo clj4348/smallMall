@@ -32,10 +32,10 @@ export default {
   },
   computed: {
     urlParam() {
-      let strUrl = this.$route.path;
-      let arrUrl = strUrl.split("/");
-      let strPage = arrUrl[arrUrl.length-1];
-      let indexof = strPage.indexOf("?");
+      let strUrl = this.$route.path
+      let arrUrl = strUrl.split("/")
+      let strPage = arrUrl[arrUrl.length-1]
+      let indexof = strPage.indexOf("?")
       return {
         strPage,
         indexof
@@ -44,7 +44,7 @@ export default {
     urlCom() {
       // 监听路由的变化
       if(this.urlParam.indexof != -1){
-        this.urlParam.strPage = this.urlParam.strPage.substr(0,this.urlParam.strPage.indexOf("?"));
+        this.urlParam.strPage = this.urlParam.strPage.substr(0,this.urlParam.strPage.indexOf("?"))
       }
       
       if(this.urlParam.strPage == 'login' || this.urlParam.strPage == 'register' || this.urlParam.strPage == 'forget-password'){
