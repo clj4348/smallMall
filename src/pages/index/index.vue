@@ -8,8 +8,6 @@
   </div>
 </template>
 <script>
-import axios from 'axios'
-
 import Floor from './components/floor'
 import IndexNav from './components/nav'
 import Banner from './components/banner'
@@ -25,17 +23,21 @@ export default{
     return {
       categoryList: [], // 分类导航
       floorList: [], // 商品楼层
-      bannerList: [] // banner图
+      bannerList: [], // banner图
+      arr:[]
     }
   },
   methods: {
     getIndexInfo () {
-      axios.get('../../../static/mock/index.json')
+      this.axios.get('../../../static/mock/index.json')
       .then((res) => {
         const msg = res.data
         this.categoryList = msg.data.categoryNav
         this.floorList = msg.data.floorList
         this.bannerList = msg.data.swiperList
+        this.arr = this.arr.concat(this.bannerList)
+        this.arr.splice(2,1);
+        console.log(this.bannerList)
       })
       .catch((arr) => {
       })
