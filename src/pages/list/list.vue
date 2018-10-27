@@ -20,14 +20,13 @@
   </div>
 </template>
 <script>
-import axios from 'axios'
-import Qs from 'qs'
 import Header from '../common/header'
 import Search from '../common/search'
 import Footer from '../common/footer'
 import ListCon from './components/list-con'
 import ListSort from './components/list-sort'
 import ListPage from './components/list-page'
+import { getSearchList } from 'service/searchList.js' 
 export default{
   name: 'List',
   components: {
@@ -56,17 +55,14 @@ export default{
       }
     }
   },
+  created(){
+    this.getList()
+  },
   methods: {
     getList () {
-      axios.get('/api/product/list.do', {
-        params:this.dataList
-      })
-      .then((res) => {
-        this.contentlist=res.data.data.list
-        this.paginate = res.data.data
-      })
-      .catch((err) => {
-
+      getSearchList(this.dataList).then((res) => {
+        this.contentlist=res.data.list
+        this.paginate = res.data
       })
     },
     // 子组件传参的方法
@@ -102,7 +98,7 @@ export default{
     }
   },
   mounted () {
-    this.getList()
+    
   }
 }
 </script>

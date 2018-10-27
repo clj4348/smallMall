@@ -14,7 +14,6 @@
   </div>
 </template>
 <script>
-import axios from 'axios'
 import UserName from './components/user-name'
 import Question from './components/question'
 import NewPassword from './components/new-password'

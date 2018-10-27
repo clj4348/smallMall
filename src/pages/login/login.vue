@@ -43,10 +43,8 @@
   </div>
 </template>
 <script>
-import axios from  'axios'
-import Qs from 'qs'
+import { postLogin } from 'service/login.js' 
 import store from '../../store/index.js'
-
 export default{
   name: 'Login',
 
@@ -56,7 +54,8 @@ export default{
       userInfo: {
         username: '',
         password: ''
-      }
+      },
+      hide:false,
     }
   },
   methods: {
@@ -85,21 +84,16 @@ export default{
       if(!this.isUsername()) return
       if(!this.isPassword()) return
       // 校验用户名是否存在
-      const userData = Qs.stringify(this.userInfo)
-      axios.post('/api/user/login.do',userData,{headers:{'Content-Type':'application/x-www-form-urlencoded'}})
-      .then((res) => {
-        const status = res.data.status
+      postLogin(this.userInfo).then((res) => {
+        const status = res.status
         if(status === 0){
           this.$store.commit('changeToken',res.data) // 赋值给vuex中的token
           this.$store.commit('changeUserMsg',res.data) // 赋值给vuex中的token
           this.$router.go(-1) //返回上一页
         }else if(status === 1){
-          this.userErr = res.data.msg
+          this.userErr = res.msg
           return false
         }
-      })
-      .catch((err) => {
-        console.log('请求数据开小差了')
       })
     }
   }

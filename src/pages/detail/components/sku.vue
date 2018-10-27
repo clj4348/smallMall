@@ -22,7 +22,7 @@
   </div>
 </template>
 <script>
-import axios from 'axios'
+import { getCartAdd } from 'service/detail.js'
 export default{
   name: 'Sku',
   props:{
@@ -50,11 +50,10 @@ export default{
       this.count--
     },
     createGoods(){
-      axios.get('/api/cart/add.do', {
-        params:{
-          productId: this.productId,
-          count: this.count
-        }
+      // 添加购物车  -- 跳转到购物车页面
+      getCartAdd({
+        productId: this.productId,
+        count: this.count
       })
       .then((res) => {
         this.$router.push('/cart')
@@ -63,10 +62,10 @@ export default{
       })
     }
   },
-  mounted () {
-    this.$watch('detailInfo', function(newVal, oldVal){
+  watch:{
+    detailInfo(newVal, oldVal){
       this.stock = newVal.stock
-    })
+    }
   }
 }
 </script>

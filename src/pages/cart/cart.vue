@@ -25,6 +25,7 @@ import Crumbs from '../common/crumbs'
 import CartHeader from './components/cart-header'
 import CartFooter from './components/cart-footer'
 import CartList from './components/cart-list'
+import { getCartList } from 'service/cart.js'
 export default {
   name: 'Index',
   components: {
@@ -80,21 +81,18 @@ export default {
     },
     // 购物车列表
     cartList() {
-      axios.get('/api/cart/list.do', {})
-        .then((res) => {
+      getCartList().then((res) => {
           // 购物车列表
-          this.cartProductVoList = res.data.data.cartProductVoList
+          this.cartProductVoList = res.data.cartProductVoList
           console.log(this.cartProductVoList.length > 0);
           // 总金额
-          this.$store.commit('changeTotalPrice', res.data.data.cartTotalPrice)
+          this.$store.commit('changeTotalPrice', res.data.cartTotalPrice)
           if(this.cartProductVoList.length > 0){
-            this.$store.commit('changeSelectAll', res.data.data.allChecked)
+            this.$store.commit('changeSelectAll', res.data.allChecked)
           }else{
             this.$store.commit('changeSelectAll', false)
           }
-          
         })
-        .catch((err) => {})
     },
     // 移除某个商品或多个商品
     deleteProduct(params){

@@ -11,9 +11,9 @@
           <span class="user login" v-else>
             <span class="link-text">
               欢迎，
-              <span class="username">{{this.user.data.username}}</span>
+              <span class="username">{{this.user.username}}</span>
               </span>
-            <span class="hear-link" @click="logout"> 退出</span>
+            <span class="hear-link" @click="onLogout"> 退出</span>
           </span>
         </div>
         <ul class="nav-list">
@@ -40,6 +40,7 @@
 
 <script>
 import axios from 'axios'
+import { getUserInfo, getCartProductCount, logout } from 'service/userInfo.js' 
 import { mapState } from 'vuex' 
   export default{
     name: 'Header',
@@ -55,25 +56,27 @@ import { mapState } from 'vuex'
         count: 'cartCount'
       })
     },
-    methods:{
+    created(){
       // 获取用户信息
-      getUserInfo () {
-        axios.post('/api/user/get_user_info.do',{})
-        .then((res) => {
-          if(res.data.status === 0){
-            this.$store.commit('changeUserMsg',res.data)
-            this.$store.commit('changeToken',res.data)
-          }
-          if(res.data.status === 1){
-            this.$store.commit('removeUserMsg')
-            this.$store.commit('changeToken', null)
-          }
-        })
-      },
+      getUserInfo({}).then((res) => {
+        console.log(res.data)
+        if(res.status === 0){
+          this.$store.commit('changeUserMsg',res.data)
+          this.$store.commit('changeToken',res.data)
+        } else {
+          this.$store.commit('removeUserMsg')
+          this.$store.commit('changeToken', null)
+        }
+      })
+      // 获取购物车数量
+      getCartProductCount().then((res) => {
+        this.$store.commit('changeCartCount', res.data)
+      })
+    },
+    methods:{
       // 退出登陆
-      logout () {
-        axios.post('/api/user/logout.do')
-        .then((res) => {
+      onLogout () {
+        logout().then((res) => {
           const status = res.data.status
           if(status === 0){
             this.$store.commit('changeToken', null)
@@ -83,17 +86,7 @@ import { mapState } from 'vuex'
             alert(res.data.msg)
           }
         })
-      },
-      cartCount () {
-        axios.get('/api/cart/get_cart_product_count.do')
-        .then((res) => {
-          this.$store.commit('changeCartCount', res.data.data)
-        })
       }
-    },
-    mounted () {
-      this.getUserInfo()
-      this.cartCount()
     }
   }
 </script>

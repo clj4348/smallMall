@@ -14,6 +14,7 @@
 <script type="text/javascript">
   import axios from 'axios'
   import Qs from 'qs'
+  import { postForgetCheckAnswer } from 'service/forgetPassword.js' 
   export default{
     name: 'Question',
     props: {
@@ -40,22 +41,16 @@
         this.$emit('userNameErrTip', '')
       },
       submitQuestion(){
-        
         let data = Object.assign({}, {answer:this.answer}, this.questionObj)
-        data = Qs.stringify(data)
         if(!this.questionErr()) return 
-        axios.post('/api/user/forget_check_answer.do',data
-        )
-          .then((res) => {
-              if(res.data.status === 1){
-                this.$emit('userNameErrTip', res.data.msg)
-              }else{
-                this.$emit('userNameErrTip', '')
-                this.$emit('newPasswordStep', {forgetToken: res.data.data, step:2})
-              }
-          }).catch((err) => {
-
-          })
+        postForgetCheckAnswer(data).then((res) => {
+          if(res.status === 1){
+            this.$emit('userNameErrTip', res.msg)
+          }else{
+            this.$emit('userNameErrTip', '')
+            this.$emit('newPasswordStep', {forgetToken: res.data, step:2})
+          }
+        })
       }
     },
 

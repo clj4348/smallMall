@@ -11,10 +11,10 @@
   </div>
 </template>
 <script>
-import axios from 'axios'
 import GoodsBanner from './components/goodsBanner'
 import GoodsInfo from './components/goodsInfo'
 import Sku from './components/sku'
+import { getDetail } from 'service/detail.js' 
 
 export default{
   name: 'List',
@@ -30,24 +30,11 @@ export default{
       detailDesc: '',
     }
   },
-  methods: {
-    getDetail() {
-      axios.get('/api/product/detail.do', {
-        params:{
-          productId: this.productId
-        }
-      })
-      .then((res) => {
-        this.detailInfo = res.data.data
-        this.detailDesc = res.data.data.detail
-      })
-      .catch((err) => {
-
-      })
-    }
-  },
-  mounted () {
-    this.getDetail()
+  created(){
+    getDetail({productId: this.productId}).then((res)=>{
+      this.detailInfo = res.data
+      this.detailDesc = res.data.detail
+    })
   }
 }
 </script>

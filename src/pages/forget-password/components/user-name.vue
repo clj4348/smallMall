@@ -11,8 +11,7 @@
   </div>
 </template>
 <script type="text/javascript">
-  import axios from 'axios'
-  import Qs from 'qs'
+  import { postForgetGetQuestion } from 'service/forgetPassword.js' 
   export default{
     name: 'UserName',
     data () {
@@ -37,20 +36,17 @@
       },
       submitUsername(){
         if(!this.usernameErr()) return 
-        let data = Qs.stringify({username:this.username})
-        axios.post('/api/user/forget_get_question.do',data)
+        postForgetGetQuestion({username:this.username})
           .then((res) => {
-              if(res.data.status === 1){
-                this.$emit('userNameErrTip', res.data.msg)
+              if(res.status === 1){
+                this.$emit('userNameErrTip', res.msg)
               }else{
                 this.$emit('userNameErrTip', '')
                 this.$emit('questionStep', {
                   username: this.username,
-                  question: res.data.data,
+                  question: res.data,
                   step:1})
               }
-          }).catch((err) => {
-
           })
       }
     },

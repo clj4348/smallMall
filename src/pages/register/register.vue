@@ -117,7 +117,10 @@
 <script>
 import axios from 'axios'
 import Qs from 'qs'
-
+import  {
+  postCheckValid,
+  postRegister
+} from 'service/register.js'
 export default{
   name: 'Register',
   data () {
@@ -185,18 +188,15 @@ export default{
         return false
       }
       // 校验用户名是否存在
-      const userData = Qs.stringify({
+      const userData = {
         'str': this.dataForm.username, 
         'type': 'username'
-      })
-      axios.post('/api/user/check_valid.do',userData,{headers:{'Content-Type':'application/x-www-form-urlencoded'}})
-      .then((res) => {
-        if(res.data.status === 1){
-          this.userErr = res.data.msg
+      }
+      postCheckValid(userData).then((res) => {
+        if(res.status === 1){
+          this.userErr = res.msg
           return false
         }
-      })
-      .catch((err) => {
       })
       this.userErr =  '' 
       return true
@@ -275,12 +275,13 @@ export default{
       if(!this.isEmail()) return 
       if(!this.isQuestion()) return
       if(!this.isAnswer()) return 
-      const registerData = Qs.stringify(this.dataForm)
-      axios.post('/api/user/register.do',registerData)
-      .then((res) => {
-        if(res.staut);
-      })
-      .catch((err) => {
+      const registerData = Qs.stringify()
+      postRegister(this.dataForm).then((res) => {
+        if(res.status === 1){
+          alert('注册失败')
+        }else{
+          this.$router.push({path: '/'})
+        }
       })
     }
   }

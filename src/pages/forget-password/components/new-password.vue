@@ -11,8 +11,7 @@
   </div>
 </template>
 <script type="text/javascript">
-  import axios from 'axios'
-  import Qs from 'qs'
+  import { postForgetResetPassword } from 'service/forgetPassword.js' 
   export default{
     name: 'NewPassword',
     props: {
@@ -39,23 +38,16 @@
         this.$emit('userNameErrTip', '')
       },
       submitPassword(){
-        
         let data = Object.assign({}, {passwordNew:this.passwordNew}, this.passwordData)
-        data = Qs.stringify(data)
-        console.log(data)
         if(!this.questionErr()) return 
-        axios.post('/api/user/forget_reset_password.do',data
-        )
-          .then((res) => {
-              if(res.data.status === 1){
-                alert(res.data.msg)
-              } else {
-                alert(res.data.msg)
-                this.$router.history.go(-1)
-              }
-          }).catch((err) => {
-
-          })
+        postForgetResetPassword(data).then((res) => {
+          if(res.status === 1){
+            alert(res.msg)
+          } else {
+            alert(res.msg)
+            this.$router.history.go(-1)
+          }
+        })
       }
     },
 

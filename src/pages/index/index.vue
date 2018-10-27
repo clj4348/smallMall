@@ -11,13 +11,14 @@
 import Floor from './components/floor'
 import IndexNav from './components/nav'
 import Banner from './components/banner'
+import {getIndexInfo} from 'service/index.js' 
 
 export default{
   name: 'Index',
   components: {
     IndexNav,
     Banner,
-    Floor
+    Floor,
   },
   data () {
     return {
@@ -27,24 +28,15 @@ export default{
       arr:[]
     }
   },
-  methods: {
-    getIndexInfo () {
-      this.axios.get('../../../static/mock/index.json')
-      .then((res) => {
-        const msg = res.data
-        this.categoryList = msg.data.categoryNav
-        this.floorList = msg.data.floorList
-        this.bannerList = msg.data.swiperList
-        this.arr = this.arr.concat(this.bannerList)
-        this.arr.splice(2,1);
-        console.log(this.bannerList)
-      })
-      .catch((arr) => {
-      })
-    }
-  },
-  mounted () {
-    this.getIndexInfo()
+  created(){
+    getIndexInfo().then((res)=>{
+      const msg = res.data
+      this.categoryList = msg.categoryNav
+      this.floorList = msg.floorList
+      this.bannerList = msg.swiperList
+      this.arr = this.arr.concat(this.bannerList)
+      this.arr.splice(2,1);
+    })
   }
 }
 </script>
