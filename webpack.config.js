@@ -1,18 +1,20 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const VueLoaderPlugin = require('vue-loader/lib/plugin');
 const path = require('path');
+const WebpackMerge = require('webpack-merge');
+const OptimizeCSSPlugin = require('optimize-css-assets-webpack-plugin')
+const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const webpack = require('webpack');
 const isDev = process.env.NODE_ENV === 'development'
 function resolve (dir) {
   return path.join(__dirname, './', dir)
 }
-console.log( resolve('src')+'====');
 const config = {
   target: 'web',
   entry: './src/main.js',
-  output:{
-    filename: '[name].js',
-    path:path.resolve(__dirname, 'dist')
+  output: {
+    path: path.resolve(__dirname, './dist'),
+    filename: '[name].js'
   },
   resolve: {
     extensions: ['.js', '.vue', '.json'],
@@ -33,52 +35,31 @@ const config = {
       },
       {
         test: /\.jsx$/,
-       loader: 'babel-loader',
-       exclude: /node_modules/,
+        loader: 'babel-loader',
+        exclude: /node_modules/,
       },
       {
         test: /\.js$/,
         loader: 'babel-loader',
         exclude: /node_modules/,
       },
-      // {
-      //   test: /\.css$/,
-      //   use: [
-      //     {
-      //       loader: 'vue-style-loader'
-      //     },
-      //     {
-      //       loader: 'css-loader',
-      //       options: {
-      //         modules: true
-      //       }
-      //     }
-      //   ]
-      // },
       {
         test: /\.css$/,
-        use: ['vue-style-loader', 'css-loader', 'postcss-loader']
+        use: [
+          'style-loader',
+          'css-loader',
+        ]
       },
       {
-        test: /\.styl(us)$/,
-        use: ['vue-style-loader', 'css-loader', 'stylus-loader', 'postcss-loader']
+        test: /\.styl(us)?$/,
+        use: [
+          'style-loader',
+          'css-loader',
+          'stylus-loader'
+        ],
+        include:[resolve('src')],
+        exclude: /node_modules/
       },
-     // {
-     //    test: /\.styl(us)$/,
-     //    use: [
-     //      'vue-style-loader',
-     //      'css-loader',
-     //       'stylus-loader',
-     //      {
-     //      loader: 'postcss-loader',
-     //      options: {
-     //          // 这里postcss直接使用stylus编译后的tree进行编译，提高效率
-     //          sourceMap: true,
-     //        }
-     //      }
-     //    ]
-     //  },
-      // 图片处理
       {
         test: /\.(gif|jpg|jpeg|png|svg)$/,
         use: [{
@@ -105,13 +86,26 @@ const config = {
     ],
   },
   devServer:{
-    port: 8000
+    port: 8000,
+    proxy: {        
+       '/api': {
+            target: 'http://test.happymmall.com',
+            changeOrigin: true,   //允许跨域
+            pathRewrite: {
+              '^/api': ''
+            }
+        }
+    }
   },
   plugins:[
     new HtmlWebpackPlugin({
       filename: 'index.html',
       template: 'index.html',
       inject: true
+    }),
+    new MiniCssExtractPlugin({
+      filename: "[name].css",
+      chunkFilename: "[id].css"
     }),
     new VueLoaderPlugin()
   ]
