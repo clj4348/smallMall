@@ -60,16 +60,11 @@ export default{
   },
   methods: {
     // 用户名
-    isUsername () {
+    UserOrPasswordFlag () {
       if(this.userInfo.username == '' ){
         this.userErr = '用户名不能为空'
         return false
       }
-      this.userErr =  '' 
-      return true
-    },
-     // 输入密码
-    isPassword () {
       if(this.userInfo.password == '' ){
         this.userErr = '密码不能为空'
         return false
@@ -81,8 +76,7 @@ export default{
       this.userErr = ''
     },
     login () {
-      if(!this.isUsername()) return
-      if(!this.isPassword()) return
+      if(!this.UserOrPasswordFlag()) return
       // 校验用户名是否存在
       postLogin(this.userInfo).then((res) => {
         const status = res.status

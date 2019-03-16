@@ -6,9 +6,21 @@
         <div class="err-item" :style="{'display': errorTips === '' ? 'none' : 'block' }">
           <p class="err-msg">{{errorTips}}</p>
         </div>
-        <user-name v-if="step === 0" @userNameErrTip="userNameErrTip" @questionStep="questionStep"></user-name>
-        <Question v-if="step === 1" @userNameErrTip="userNameErrTip" :questionObj="questionObj" @newPasswordStep="newPasswordStep"></Question>
-        <new-password v-if="step === 2" @userNameErrTip="userNameErrTip" :passwordData="passwordData"></new-password>
+        <user-name v-if="step === 0"
+          @userNameErrTip="userNameErrTip"
+          @questionStep="questionStep">
+          </user-name>
+        <Question
+          v-if="step === 1"
+          @userNameErrTip="userNameErrTip"
+          :questionObj="questionObj"
+          @newPasswordStep="newPasswordStep">
+          </Question>
+        <new-password
+          v-if="step === 2"
+          @userNameErrTip="userNameErrTip"
+          :passwordData="passwordData">
+        </new-password>
       </div>
     </div>
   </div>

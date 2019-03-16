@@ -6,14 +6,16 @@
       <label class="user-label">
         <i class="fa fa-user"></i>
       </label>
-        <input type="text" class="user-content"  placeholder="请输入密码提示答案" @input="questionInput($event)" @focus="questionFocus">
+        <input type="text"
+        class="user-content" 
+        placeholder="请输入密码提示答案"
+        @input="questionInput($event)"
+        @focus="questionFocus">
     </div>
     <a class="user-btn" id="submit-username" @click="submitQuestion">下一步</a>
   </div>
 </template>
 <script type="text/javascript">
-  import axios from 'axios'
-  import Qs from 'qs'
   import { postForgetCheckAnswer } from 'service/forgetPassword.js' 
   export default{
     name: 'Question',
@@ -52,10 +54,6 @@
           }
         })
       }
-    },
-
-    mounted () {
-
     }
   }
 </script>

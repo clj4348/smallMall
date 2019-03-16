@@ -39,11 +39,8 @@ export default{
         console.log(name)
         this.$router.push({
           path: '/list',
-          params: {
-            keyword: name
-          },
           query: {
-              keyword: name
+            keyword: name
           }
         })
       }

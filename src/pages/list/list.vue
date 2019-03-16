@@ -47,11 +47,11 @@ export default{
       size: 0, // 当前页数
       pages: 0, // 总共多少页
       dataList:{
-        keyword : this.utils.getUrlParam('keyword') || '',
-        categoryId : this.utils.getUrlParam('categoryId') || '',
-        orderBy : this.utils.getUrlParam('orderBy') || 'default', // 升序降序
-        pageNum : this.utils.getUrlParam('pageNum') || 1,
-        pageSize : this.utils.getUrlParam('pageSize') || 2
+        keyword : this.$route.query.keyword || '',
+        categoryId : this.$route.query.categoryId || '',
+        orderBy : this.$route.query.orderBy || 'default', // 升序降序
+        pageNum : this.$route.query.pageNum || 1,
+        pageSize : this.$route.query.pageSize || 2
       }
     }
   },
@@ -96,9 +96,6 @@ export default{
       }
       this.getList()
     }
-  },
-  mounted () {
-    
   }
 }
 </script>

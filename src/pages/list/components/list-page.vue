@@ -94,7 +94,6 @@
       },
       numAct(newVal, odlVal) {
         this.numAct = newVal
-        console.log(this.indexs)
       }    
     },
     mounted(){

@@ -22,9 +22,6 @@
       sendParams (name) {
         this.$router.push({
           path: '/list',
-          params: {
-            keyword: name
-          },
           query: {
               keyword: name
           }

@@ -5,9 +5,14 @@
       <label class="user-label">
         <i class="fa fa-user"></i>
       </label>
-        <input type="text" class="user-content"  placeholder="请输入用户名" @input="userInput($event)" @focus="userFocus">
+        <input type="text" class="user-content" 
+          placeholder="请输入用户名"
+          @input="userInput($event)"
+          @focus="userFocus">
     </div>
-    <a class="user-btn" id="submit-username" @click="submitUsername">下一步</a>
+    <a class="user-btn"
+      id="submit-username"
+      @click="submitUsername">下一步</a>
   </div>
 </template>
 <script type="text/javascript">

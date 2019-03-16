@@ -1,4 +1,4 @@
-const HtmlWebpackPlugin = require('html-webpack-plugin');
+ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const VueLoaderPlugin = require('vue-loader/lib/plugin');
 const path = require('path');
 const WebpackMerge = require('webpack-merge');
@@ -10,7 +10,7 @@ const isDev = process.env.NODE_ENV === 'development'
 function resolve (dir) {
   return path.join(__dirname, './', dir)
 }
-const config = {
+const config = { 
   target: 'web',
   entry: './src/main.js',
   output: {
