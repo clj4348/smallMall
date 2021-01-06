@@ -1,5 +1,7 @@
 import axios from 'axios'
 import Qs from 'qs'
+import ajax from '../../request/index.js';
+
 /*
 * axios请求拦截
 * @param {object} config axios请求配置对象
@@ -18,6 +20,10 @@ axios.interceptors.request.use((config) => {
 * @return {object} 响应成功或失败时返回的响应对象或者promise error对象
 **/
 axios.interceptors.response.use((response) => {
+  console.log(response, 'response')
+  if(response.data.status === '1') {
+    
+  }
   return response
 }, (error) => {
   return Promise.resolve(error)
@@ -34,31 +40,55 @@ function successStatus (res) {
 
 // post和get 方法
 export default {
-  post (url, data) {
-    return axios({
-      method: 'post',
-      url,
-      data: Qs.stringify(data),
-      timeout: 10000,
-      headers: {
-        'X-Requested-Width': 'XMLHttpRequest',
-        'Content-Type':'application/x-www-form-urlencoded; charst=UTF-8'
+  post: (url, data) => {
+    return ajax(url,{
+      type: "POST", // 请求方式
+      data: data, // 参数
+      contentType: {
+        'Content-Type': 'application/x-www-form-urlencoded; charst=UTF-8'
       }
-    }).then((res) => {
-      return successStatus(res)
+    }).then(res => {
+      console.log(res, 'res')
+      return res
     })
   },
-  get (url, params) {
-    return axios({
-      method: 'get',
-      url,
-      params,
-      timeout: 10000,
-      headers: {
-        'X-Requested-With': 'XMLHttpRequest'
+  get: (url, data) => {
+    return ajax(url,{
+      type: "GET", // 请求方式
+      data: data, // 参数
+      contentType: {
+        'Content-Type':'application/x-www-form-urlencoded; charst=UTF-8'
       }
-    }).then((res) => {
-      return successStatus(res)
+    }).then(res => {
+      console.log(res, 'res')
+      return res
     })
   }
+  // post (url, data) {
+  //   return axios({
+  //     method: 'post',
+  //     url,
+  //     data: Qs.stringify(data),
+  //     timeout: 10000,
+  //     headers: {
+  //       'X-Requested-Width': 'XMLHttpRequest',
+  //       'Content-Type':'application/x-www-form-urlencoded; charst=UTF-8'
+  //     }
+  //   }).then((res) => {
+  //     return successStatus(res)
+  //   })
+  // },
+  // get (url, params) {
+  //   return axios({
+  //     method: 'get',
+  //     url,
+  //     params,
+  //     timeout: 10000,
+  //     headers: {
+  //       'X-Requested-With': 'XMLHttpRequest'
+  //     }
+  //   }).then((res) => {
+  //     return successStatus(res)
+  //   })
+  // }
 }

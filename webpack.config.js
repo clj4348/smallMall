@@ -95,13 +95,13 @@ const config = {
   devServer:{
     port: 8000,
     proxy: {        
-       '/api': {
-            target: 'http://test.happymmall.com',
-            changeOrigin: true,   //允许跨域
-            pathRewrite: {
-              '^/api': ''
-            }
+      '/api': {
+        target: 'http://test.happymmall.com',
+        changeOrigin: true,   //允许跨域
+        pathRewrite: {
+          '^/api': ''
         }
+      }
     }
   },
   optimization:{
